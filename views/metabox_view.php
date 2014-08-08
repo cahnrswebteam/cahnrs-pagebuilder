@@ -186,6 +186,9 @@ class metabox_view {
                 <select class="input-column-layout" >
                 	<option value="pagbuilder-layout-full">One</option>
                     <option value="pagbuilder-layout-aside">Two - Sidebar Right</option>
+                    <option value="pagbuilder-layout-half">Two - Half</option>
+                    <option value="pagbuilder-layout-third-right">Two - 1/3 Right</option>
+                    <option value="pagbuilder-layout-third-left">Two - 1/3 Left</option>
                     <option value="pagbuilder-layout-thirds">Three</option>
                     <option value="pagbuilder-layout-fourths">Four</option>
                 </select></p>
@@ -223,6 +226,9 @@ class metabox_view {
                     <select class="input-column-layout" name="<?php echo $input_base;?>[layout]">
                         <option value="pagbuilder-layout-full" <?php \selected( $row['layout'] , 'pagbuilder-layout-full' );?>>One</option>
                         <option value="pagbuilder-layout-aside" <?php \selected( $row['layout'] , 'pagbuilder-layout-aside' );?>>Two - Sidebar Right</option>
+                        <option value="pagbuilder-layout-half" <?php \selected( $row['layout'] , 'pagbuilder-layout-half' );?>>Two - Half</option>
+                        <option value="pagbuilder-layout-third-right" <?php \selected( $row['layout'] , 'pagbuilder-layout-third-right' );?>>Two - 1/3 Right</option>
+                        <option value="pagbuilder-layout-third-left" <?php \selected( $row['layout'] , 'pagbuilder-layout-third-left' );?>>Two - 1/3 Left</option>
                         <option value="pagbuilder-layout-thirds" <?php \selected( $row['layout'] , 'pagbuilder-layout-thirds' );?>>Three</option>
                         <option value="pagbuilder-layout-fourths" <?php \selected( $row['layout'] , 'pagbuilder-layout-fourths' );?>>Four</option>
                     </select></p>
@@ -314,8 +320,8 @@ class metabox_view {
                         echo $item->get_form( $item_array , $input_name );
                     }
                     ?>
-                    <div class="cc-form-section cc-form-feed">
-						<header>Advanced Settings</header>
+                    <div class="cc-form-section-advanced">
+						<header>Advanced Settings +</header>
     					<div class="section-wrapper">
                             <div class="form-sub-section cc-form-advanced-settings">
                     <p>

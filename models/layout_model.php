@@ -20,7 +20,11 @@ class layout_model {
 		
 	public $registered_layouts = array(
 		'pagbuilder-layout-full' => 1,
+		'pagbuilder-layout-aside-empty' => 1,
 		'pagbuilder-layout-aside' => 2,
+		'pagbuilder-layout-half' => 2,
+		'pagbuilder-layout-third-left' => 2,
+		'pagbuilder-layout-third-right' => 2,
 		'pagbuilder-layout-thirds' => 3,
 		'pagbuilder-layout-fourths' => 4,
 	);
@@ -30,6 +34,42 @@ class layout_model {
 		'column-layout-1-2' => 'pagbuilder-layout-aside',
 		'column-layout-1-2-3' => 'pagbuilder-layout-thirds',
 		'column-layout-1-2-3-4' => 'pagbuilder-layout-fourths',
+	);
+	
+	public $layout_styles = array(
+		'pagbuilder-layout-full' => array( 
+			'column-1' => 'display:block;' 
+			),
+		'pagbuilder-layout-aside' => array( 
+			'column-1' => 'display:block; margin-right: 250px; width: auto; overflow: hidden', 
+			'column-2' => 'float: right; width: 250px;', 
+			),
+		'pagbuilder-layout-aside-empty' => array( 
+			'column-1' => 'display:block;', 
+			),
+		'pagbuilder-layout-half' => array( 
+			'column-1' => 'display:inline-block; width: 50%; vertical-align: top;', 
+			'column-2' => 'display:inline-block; width: 50%; vertical-align: top;', 
+			),
+		'pagbuilder-layout-third-right' => array( 
+			'column-1' => 'display:inline-block; width: 66.66%; vertical-align: top;', 
+			'column-2' => 'display:inline-block; width: 33.33%; vertical-align: top;', 
+			),
+		'pagbuilder-layout-third-left' => array( 
+			'column-1' => 'display:inline-block; width: 33.33%; vertical-align: top;', 
+			'column-2' => 'display:inline-block; width: 66.66%; vertical-align: top;', 
+			),
+		'pagbuilder-layout-thirds' => array( 
+			'column-1' => 'display:inline-block; width: 33.33%; vertical-align: top;', 
+			'column-2' => 'display:inline-block; width: 33.33%; vertical-align: top;', 
+			'column-3' => 'display:inline-block; width: 33.33%; vertical-align: top;',
+			 ),
+		'pagbuilder-layout-fourths' => array( 
+			'column-1' => 'display:inline-block; width: 25%; vertical-align: top;', 
+			'column-2' => 'display:inline-block; width: 25%; vertical-align: top;', 
+			'column-3' => 'display:inline-block; width: 25%; vertical-align: top;', 
+			'column-4' => 'display:inline-block; width: 25%; vertical-align: top;', 
+			),
 	);
 	
 	public $email_column_widths = array(

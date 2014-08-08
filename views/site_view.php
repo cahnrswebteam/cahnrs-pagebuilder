@@ -10,14 +10,28 @@ class site_view {
 		*************************************************/?>
     	<section class="pagebuilder-layout" >
         <?php foreach( $layout_obj as $row ):?>
-        <?php $column_count = $layout_model->get_columns_by_layout( $row['layout'] );?>
-        	<?php if( isset( $row['columns'] ) ):?>
+        <?php 
+			/** TO DO: CONSOLIDATE THE COLUMN COUNT AND COULUMN STYLES INTO ONE ARRAY - DB **/
+			$column_count = $layout_model->get_columns_by_layout( $row['layout'] ); // GET COLUMN COUNT FOR NOW
+			/*************************************
+			** If the row is a two column with an empty right column then render as one column aka "pagbuilder-layout-aside-empty" **
+			**************************************/
+			$row['layout'] =( !isset( $row['columns']['column-2'] ) && 'pagbuilder-layout-aside' == $row['layout'] )? 
+				$row['layout'].'-empty' : $row['layout'];
+        	if( isset( $row['columns'] ) ):?>
 				<?php $empty_aside = ( isset( $row['columns']['column-2'] ))? '' : 'empty-aside'; ?>
                 <div id="<?php echo $row['id'];?>" class="pagebuilder-row <?php echo $row['id'].' '.$row['layout'].' '.$empty_aside;?>" >
                     <?php for( $i = 1; $i <= $column_count; $i++ ):
-						$column_id = 'column-'.$i;
+						if( 'pagbuilder-layout-aside' == $row['layout'] ){
+							if( 1 == $i ) $c = 2;
+							if( 2 == $i ) $c = 1;
+						} else {
+							$c = $i;
+						}
+						$column_id = 'column-'.$c;
 						$column = ( isset( $row['columns'][$column_id]) )? $row['columns'][$column_id] : array();
-                        ?><div id="<?php echo $row['id'].'-column-'.$i;?>" class="pagebuilder-column pagebuilder-column-<?php echo $i;?>">
+						$column_style = $layout_model->layout_styles[ $row['layout'] ][ $column_id ];
+                        ?><div id="<?php echo $row['id'].'-column-'.$c;?>" class="pagebuilder-column pagebuilder-column-<?php echo $c;?>" style="<?php echo $column_style;?>">
                         <?php if( $column['items']){
                         	foreach( $column['items'] as $item_key => $item ){
 								$tag = ( $item['settings']['is_content'] )? 'article' : 'aside';

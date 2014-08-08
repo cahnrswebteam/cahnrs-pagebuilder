@@ -1,5 +1,5 @@
 /** START LAYOUTS ******************/
-.pagbuilder-layout-full .pagebuilder-column{
+/*.pagbuilder-layout-full .pagebuilder-column{
 	display: block;
 }
 
@@ -38,7 +38,7 @@
 	display: inline-block;
 	vertical-align: top;
 	width: 25%;
-}
+}*/
 /** BASIC ITEM STYLES **************************/
 .pagebuilder-column img {
 	max-width: 100%;
