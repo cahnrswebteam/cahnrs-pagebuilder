@@ -5,11 +5,26 @@ class site_view {
 	public $content_base = '_pagebuilder_editors';
 	
 	public function get_site_view( $post , $layout_obj, $layout_model ){
+		
 		/************************************************
 		** START LAYOUT **
 		*************************************************/?>
     	<section class="pagebuilder-layout" >
-        <?php foreach( $layout_obj as $row ):?>
+        <?php /************************************************
+		** Add third level nav to layout **
+		*************************************************/
+		if( $layout_obj['tertiary_nav'] ){
+			echo '<nav id="pagebuilder-tertiary-nav">';
+			foreach( $layout_obj['tertiary_nav'] as $menu_item ){
+				$active = ( $menu_item->object_id == $post->ID )? 'selected' : 'inactive';
+				echo '<a class="'.$active.'" href="'.$menu_item->url.'">';
+					echo $menu_item->title;
+				echo '</a>';
+			}
+			echo '</nav>';
+		}
+		//$this->get_third_level_nav( $post );
+        foreach( $layout_obj as $row ):?>
         <?php 
 			/** TO DO: CONSOLIDATE THE COLUMN COUNT AND COULUMN STYLES INTO ONE ARRAY - DB **/
 			$column_count = $layout_model->get_columns_by_layout( $row['layout'] ); // GET COLUMN COUNT FOR NOW
@@ -154,6 +169,93 @@ class site_view {
         </table>
         <?php
 	}
+/********************************************
+** START SERVICES **
+*********************************************/
+	/*public function get_third_level_nav( $post ){
+		$menu_name = 'site';
+		if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_name ] ) ) {
+			$current_menu_parent = false;
+			$sub_items = array();
+			$menu = wp_get_nav_menu_object( $locations[ $menu_name ] );
+			$menu_items = wp_get_nav_menu_items( $menu->term_id );
+			$menu_items = $this->service_get_third_level_nav( $menu_items );
+			//var_dump( $menu );
+			foreach( $menu_items as $menu_id => $menu ){
+				if( ( $menu['obj']->object_id == $post->ID ) ){
+						if( array_key_exists( $menu['parent'], $menu_items ) ){ // Is third or greater level
+							$current_menu_parent = $menu['parent'];
+						} else {
+							$current_menu_parent = $menu_id;
+						}
+					break;
+				}
+			}
+			if( $current_menu_parent && array_key_exists( $current_menu_parent, $menu_items ) ){
+				$parent = $menu_items[$current_menu_parent];
+				var_dump( $parent );
+				if( isset( $parent['children']) && $parent['children'] ){
+					echo $parent['obj']->title;
+					foreach( $parent['children'] as $child ){
+						echo $menu_items[$child]['obj']->title;
+					}
+				}
+			}
+			/*foreach ( $menu_items as $menu_item ) {
+				if( $menu_item->menu_item_parent ){ // If second level nav - DB
+					if( ( $menu_item->object_id == $post->ID ) ){
+						$current_menu_item = $menu_item;
+						$sub_items[] = $menu_item;
+						break;
+					}
+				}
+			}
+			if( $current_menu_item ){
+				echo '<div id="pagebuilder-third-level-nav">';
+					foreach ( $menu_items as $menu_item ) {
+						if( $menu_item->menu_item_parent == $current_menu_item->ID ){
+							$sub_items[] = $menu_item;
+						}
+					}
+					foreach( $sub_items as $sub_item ){
+						$title = $sub_item->title;
+						$url = $sub_item->url;
+						$menu_list .= '<a href="' . $url . '">' . $title . '</a>';
+					}
+					echo $menu_list;
+				echo '</div>';
+			}*/
+		//}
+	//}
+	
+	/*private function service_get_parent_id( $nav_items ){
+		foreach ( $menu_items as $menu_item ) {
+			if( $menu_item->menu_item_parent ){ // If second or thrid level nav - DB
+				if( ( $menu_item->object_id == $post->ID ) ){
+					return $menu_item->ID;
+				}
+			}
+		}
+	}*/
+	
+	/*private function service_nav_items_by_id( $nav_items ){
+		$new_nav = array();
+		foreach( $nav_items as $nav_item ){
+			$new_nav[ $nav_item->ID ] = $nav_item;
+		}
+	}*/
+	
+	/*public function service_get_third_level_nav( $menu_items ){
+		$menu  = array();
+		$current_id = false;
+		$parent_id = false;
+		foreach ( $menu_items as $menu_item ) {
+			$menu[ $menu_item->ID ]['obj'] = $menu_item;
+			if( $menu_item->menu_item_parent ) $menu[ $menu_item->ID ]['parent'] = $menu_item->ID;
+			if( array_key_exists ( $menu_item->menu_item_parent , $menu ) ) $menu[ $menu_item->menu_item_parent ]['children'][] = $menu_item->ID;
+		}
+		return $menu;
+	}*/
 	
 	
 	private function get_title( $item_instance ){

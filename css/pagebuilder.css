@@ -51,6 +51,25 @@
 	margin: 0 10px 20px 10px;
 }
 
+#pagebuilder-tertiary-nav{
+	margin: 0 1em;
+	border-bottom: 4px solid #fff;
+}
+#pagebuilder-tertiary-nav a {
+	display: inline-block;
+	padding: 8px 20px;
+	border-right: 1px solid #ccc;
+}
+
+#pagebuilder-tertiary-nav a:not(.selected) {
+	background: #ddd;
+	color: inherit;
+}
+#pagebuilder-tertiary-nav a.selected {
+	background: #fff;
+	font-weight: bold;
+}
+
 /** CSS HOOKS **********************************/
 
 /* no-side-margin */

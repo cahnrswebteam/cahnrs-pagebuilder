@@ -103,6 +103,7 @@ class layout_model {
 				$layout_obj[$row_k]['layout'] = $this->legacy_layouts[ $row_v['layout'] ];
 			}
 		}
+		$layout_obj['tertiary_nav'] = $this->get_tertiary_nav( $post );
 		//usort( $layout_obj , array( $this , 'service_sort_rows') );
 		return $layout_obj;
 	}
@@ -239,6 +240,79 @@ class layout_model {
 	public function get_columns_by_layout( $layout ){
 		if( array_key_exists( $layout , $this->registered_layouts ) ) return $this->registered_layouts[ $layout ];
 		return 1;
+	}
+	
+	public function get_tertiary_nav( $post ){
+		$tertiary = array(); // WE'LL POPULATE THIS LATER
+		$id_menu = array(); // NEW ARRAY BECUASE THE DEFAULT MENU ARRAY SUCKS
+		$parent_id = false; // RESET LATER
+		$menu_loc = 'site'; // TO DO: MAKE THIS A DROPDOWN IN THEME OPTIONS
+		$menu_name = $menu_loc; // LOCATION TO LOOK FOR
+		if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_name ] ) ) { // CHECK IF LOCATION IS SET
+		
+			$menu = wp_get_nav_menu_object( $locations[ $menu_name ] ); // GET THE MENU OBJECT FROM LOCATION
+			$menu_items = wp_get_nav_menu_items( $menu->term_id ); // GET MENU ITEMS FROM OBJECT ID
+			
+			
+			foreach( $menu_items as $key => $menu ){ // LOOP THROUGH MENU ITEMS - DB
+				$id_menu[$menu->ID] = $menu; // USE MENU ID AS KEY => MENU - DB
+			} // END FOREACH
+			
+			
+			foreach( $id_menu as $key => $menu ){ // LOOP THROUGH MENU ITEMS - DB
+				if( $menu->object_id == $post->ID ){
+					if( !$menu->menu_item_parent ) return array(); // TOP LEVEL RETURN  - EMPTY ARRAY - DB
+					$c_parent = $menu->menu_item_parent; // GET CURRENT PARENT
+					if( !$id_menu[$c_parent]->menu_item_parent ){ // IS SECOND LEVEL - DB
+						$parent_id = $menu->ID; // THIS IS THE PARENT OF NAV
+						break; // BREAK FOREACH LOOP
+					} else { // THIRD LEVEL
+						$parent_id = $c_parent; // PARENT IS CURRENT PARENT
+						break; // BREAK FOREACH LOOP
+					}
+					break; // BREAK FOREACH
+				} // END IF
+			} // END FOREACH
+			
+			if( $parent_id ){ // LET'S CHECK IF WE HAVE PARENTS
+				foreach( $id_menu as $key => $menu ){ // ONCE MORE LOOP THROUGH MENU
+					if( $menu->ID == $parent_id || $menu->menu_item_parent == $parent_id ){ // IF IS PARENT OR IS CHILD OF PARENT
+						$tertiary[] = $menu; // TOLD YOU WE'D SET IT LATER
+					} // END IF
+				} // END FOREACH
+			} // END IF
+			
+		} // END IF
+		return $tertiary; // AND WE ARE DONE
+	} // END FUNCTION
+	
+	public function get_current_menu_array( $post , $menu ){
+		$full_menu = array(); // WE'LL POPULATE THIS LATER
+		$id_menu = array(); // NEW ARRAY BECUASE THE DEFAULT MENU ARRAY SUCKS
+		$menu_name = $menu; // LOCATION TO LOOK FOR
+		if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_name ] ) ) { // CHECK IF LOCATION IS SET
+			$menu = wp_get_nav_menu_object( $locations[ $menu_name ] ); // GET THE MENU OBJECT FROM LOCATION
+			$menu_items = wp_get_nav_menu_items( $menu->term_id ); // GET MENU ITEMS FROM OBJECT ID
+			foreach( $menu_items as $key => $menu ){ // LOOP THROUGH MENU ITEMS - DB
+				$id_menu[$menu->ID] = $menu; // USE MENU ID AS KEY => MENU - DB
+			}
+			foreach( $id_menu as $id => $menu ){ // LOOP THROUGH NEW MENUS BY ID
+					if( !$menu->menu_item_parent ) { // IF NO PARENT - TOP LEVEL - DB
+						$full_menu[$id]['obj'] = $menu; // ADD TO TERTIARY
+					} else { // HAS PARENT - 2ND OR 3RD LEVEL
+						$parent_id = $menu->menu_item_parent; // GET PARENT ID
+						if( !$id_menu[ $parent_id ]->menu_item_parent && array_key_exists( $parent_id , $full_menu ) ){ // IS SECOND LEVEL
+							$full_menu[$parent_id]['subnav'][$id]['obj'] = $menu; // FIND PARENT AND ADD TO SUBNAV
+						} else { // THRID LEVEL
+							$top_id = $id_menu[ $parent_id ]->menu_item_parent; // GET TOP PARENT
+							if( array_key_exists( $top_id , $full_menu ) ){ // CHECK IF IT EXISTS - WILL BE FALSE IF FOURTH LEVEL
+								$full_menu[$top_id]['subnav'][$parent_id]['subnav'][$id]['obj'] = $menu; // ADD TO PARENT SUBNAV
+							} // END IF
+						} // END IF
+					} // END IF
+			} // END FOREACH
+			return $full_menu; // THERE BE A BIT OF LOGIC HERE
+		}
 	}
 	
 	/********************************************
