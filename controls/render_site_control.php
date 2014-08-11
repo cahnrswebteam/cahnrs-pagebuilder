@@ -11,6 +11,7 @@ class render_site_control {
 	}
 	
 	public function init(){
+		\add_filter('pagebuilder_the_content', 'oembed_dataparse' );
 		\add_filter('pagebuilder_the_content', 'do_shortcode');
 		\add_filter( 'pagebuilder_the_content', 'wptexturize'        );
 		\add_filter( 'pagebuilder_the_content', 'convert_smilies'    );
