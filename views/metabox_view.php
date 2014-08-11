@@ -133,7 +133,9 @@ class metabox_view {
 		<div id="pagebuilder-layout-editor">
             <div class="inner-wrapper">
 				<?php foreach( $layout_obj as $row ){
-                    $this->render_layout_editor_row( $post , $row, $layout_obj );
+					if( $row['id'] ){
+                    	$this->render_layout_editor_row( $post , $row, $layout_obj );
+					}
                 };?>
             </div> 
             <?php $this->render_layout_editor_settings( $post );?>

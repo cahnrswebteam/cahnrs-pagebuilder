@@ -82,7 +82,7 @@ var pagebuilder = function(){
 				if( datain > s.exst_itms[ dataid ] ) s.exst_itms[ dataid ] = datain;
 				//s.exst_itms[ dataid ] = s.exst_itms[ dataid ] + 1;
 			} else {
-				s.exst_itms[ dataid ] = 1;
+				s.exst_itms[ dataid ] = datain;
 			}
 		});
 	}

@@ -41,8 +41,11 @@
 }*/
 /** BASIC ITEM STYLES **************************/
 .pagebuilder-column img {
-	max-width: 100%;
+	max-width: 100% !important;
 	height: auto;
+}
+.pagebuilder-column iframe {
+	max-width: 100% !important;
 }
 
 .pagebuilder-column aside,
