@@ -11,15 +11,6 @@ class render_site_control {
 	}
 	
 	public function init(){
-		//\add_filter('pagebuilder_the_content', 'embed_oembed_html' );
-		\add_filter('pagebuilder_the_content', 'do_shortcode');
-		\add_filter( 'pagebuilder_the_content', 'wptexturize'        );
-		\add_filter( 'pagebuilder_the_content', 'convert_smilies'    );
-		\add_filter( 'pagebuilder_the_content', 'convert_chars'      );
-		\add_filter( 'pagebuilder_the_content', 'wpautop'            );
-		\add_filter( 'pagebuilder_the_content', 'shortcode_unautop'  );
-		\add_filter( 'pagebuilder_the_content', 'prepend_attachment' );
-		
 		
 		 \add_filter( 'the_content', array( $this , 'render_site' ), 15 ); 
 		 
@@ -28,11 +19,15 @@ class render_site_control {
 	
 	public function render_site( $content ) {
 		global $post; 
+		global $in_loop;
+		if( $in_loop ) return $content;
 		if ( ( is_singular('post') || is_singular('page') ) && is_main_query() ) {
+			$in_loop = true;
 			$layout_obj = $this->layout_model->get_layout_obj( $post );
 			ob_start();
 			$this->site_view->get_site_view( $post , $layout_obj , $this->layout_model );
 			$content = ob_get_clean();
+			$in_loop = false;
 		} 
 		else if ( is_singular('email') ){
 			$layout_obj = $this->layout_model->get_layout_obj( $post );

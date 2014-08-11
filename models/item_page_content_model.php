@@ -11,6 +11,7 @@ class item_page_content_model {
 	}
 	
 	public function render_site( $post, $item_obj = array() ){
+		
 		echo '<iframe class="pagebuilder-content-frame page_content-frame" src="JavaScript:\'\'" frameborder="0"></iframe>';
 	}
 	
@@ -26,7 +27,8 @@ class item_page_content_model {
 					$content = $more_content[0];
 			}
 		}
-		echo \apply_filters('pagebuilder_the_content', $content ); // APPLY FILTERS AND ECHO 
+		//echo \apply_filters('pagebuilder_the_content', $content ); // APPLY FILTERS AND ECHO 
+		echo \apply_filters('the_content', $content );
 	}
 	
 };?>

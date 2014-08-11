@@ -10,4 +10,6 @@
 <file name="item_subtitle_model.php" server="ftp.wpdev.cahnrs.wsu.edu//public_html/" local="130517378798123292" remote="130512957000000000" Dst="2" />
 <file name="layout_model.php" server="ftp.wpdev.cahnrs.wsu.edu//public_html/" local="130517557980457889" remote="130517557800000000" Dst="2" />
 <file name="layout_model.php" server="ftp.wpdev.cahnrs.wsu.edu//public_html/m1.wpdev.cahnrs.wsu.edu/wp-content/plugins/cahnrs-pagebuilder/" local="130522349004518605" remote="130522348800000000" Dst="2" />
+<file name="item_page_content_model.php" server="ftp.wpdev.cahnrs.wsu.edu//public_html/m1.wpdev.cahnrs.wsu.edu/wp-content/plugins/cahnrs-pagebuilder/" local="130522484587024205" remote="130522484400000000" Dst="2" />
+<file name="item_content_block_model.php" server="ftp.wpdev.cahnrs.wsu.edu//public_html/m1.wpdev.cahnrs.wsu.edu/wp-content/plugins/cahnrs-pagebuilder/" local="130522486942913919" remote="130522486800000000" Dst="2" />
 </dwsync>

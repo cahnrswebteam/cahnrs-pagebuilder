@@ -48,7 +48,7 @@ class item_content_block_model {
 				}
 			}
 		}
-		echo \apply_filters('pagebuilder_the_content', $content ); // APPLAY FILTERS AND ECHO CONTENT
+		echo \apply_filters('the_content', $content ); // APPLY FILTERS AND ECHO CONTENT
 	}
 	
 };?>
