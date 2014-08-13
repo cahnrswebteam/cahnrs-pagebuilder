@@ -2,7 +2,7 @@
 
 .edit-form-section {
 	position: absolute;
-	left: 9999px;
+	top: -9999px;
 }
 
 #page_builder {
@@ -80,7 +80,7 @@
 
 #pagebuilder-content-editor .content-block-editor.inactive {
 	position: absolute;
-	left: 9999px;
+	top: -9999px;
 }
 
 #pagebuilder-content-editor .content-block-editor.active-lb {
