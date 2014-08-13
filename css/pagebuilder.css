@@ -104,7 +104,13 @@
 
 /* ## SMALL (max 693)  */
 @media only screen and (max-width: 693px) {
-	#pagebuilder-tertiary-nav{
+	#pagebuilder-tertiary-nav {
 		margin: 0;
+	}
+	.pagebuilder-row > div {
+		width: 100% !important; /* Necessary in order to override inline styling */
+	}
+	.pagbuilder-layout-half > div > aside {
+		margin: 0 0 1em 0;
 	}
 }
