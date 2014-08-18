@@ -21,7 +21,7 @@ class render_site_control {
 		global $post; 
 		global $in_loop;
 		if( $in_loop ) return $content;
-		if ( ( is_singular('post') || is_singular('page') ) && is_main_query() ) {
+		if ( ( is_singular('post') || is_singular('page') ) /*&& is_main_query()*/ ) {
 			$in_loop = true;
 			$layout_obj = $this->layout_model->get_layout_obj( $post );
 			ob_start();
