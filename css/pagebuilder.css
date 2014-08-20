@@ -1,116 +1,100 @@
-/** START LAYOUTS ******************/
-/*.pagbuilder-layout-full .pagebuilder-column{
-	display: block;
-}
-
-.pagbuilder-layout-aside .pagebuilder-column {
-	display: inline-block;
-	vertical-align: top;
-}
-
-.pagbuilder-layout-aside .pagebuilder-column.pagebuilder-column-1 {
-	width: 75%;
-}
-
-.pagbuilder-layout-aside .pagebuilder-column.pagebuilder-column-2 {
-	width: 25%;
-}
-
-.pagbuilder-layout-aside.empty-aside .pagebuilder-column {
-	display: block;
-}
-
-.pagbuilder-layout-aside.empty-aside .pagebuilder-column.pagebuilder-column-1 {
-	display: block;
-	width: auto;
-}
-.pagbuilder-layout-aside.empty-aside .pagebuilder-column.pagebuilder-column-2 {
-	display: none;
-}
-
-.pagbuilder-layout-thirds .pagebuilder-column {
-	display: inline-block;
-	vertical-align: top;
-	width: 33.33%;
-}
-
-.pagbuilder-layout-fourths .pagebuilder-column {
-	display: inline-block;
-	vertical-align: top;
-	width: 25%;
-}*/
-/** BASIC ITEM STYLES **************************/
+/* basic item styles */
 .pagebuilder-column img {
-	max-width: 100% !important;
+	max-width: 100%;
 	height: auto;
 }
 .pagebuilder-column iframe {
 	max-width: 100% !important;
 }
 
+/* widths */
+.pagbuilder-layout-aside .pagebuilder-column-1 {
+	width: 75%;
+}
+.pagbuilder-layout-aside .pagebuilder-column-2 {
+	width: 25%;
+}
+.pagbuilder-layout-half .pagebuilder-column {
+	width: 50%;
+}
+.pagbuilder-layout-third-right .pagebuilder-column-1,
+.pagbuilder-layout-third-left .pagebuilder-column-2 {
+	width: 67%;
+}
+.pagbuilder-layout-third-left .pagebuilder-column-1,
+.pagbuilder-layout-third-right .pagebuilder-column-2 {
+	width: 33%;
+}
+.pagbuilder-layout-thirds .pagebuilder-column {
+	width: 33.33%;
+	width: calc(100% / 3);
+}
 .pagebuilder-column aside,
 .pagebuilder-column article {
 	display: block;
-	margin: 0 10px 20px 10px;
 }
 
-#pagebuilder-tertiary-nav{
-	margin: 0 1em;
-	border-bottom: 4px solid #fff;
-	/* PC adds/overrides */
-	border: none;
+/* margins */
+.cahnrs-dynamic-frame .cahnrs-dynamic-window > article,
+#cahnrs-dynamic-page-load {
+	margin: 0 1em 2em 2em;
 }
-#pagebuilder-tertiary-nav a {
-	display: inline-block;
-	padding: 8px 20px;
-	border-right: 1px solid #ccc;
-	/* PC adds/overrides */
-	background: rgba( 255, 255, 255, 0.9 );
-	border: none;
-	margin-right: 1px;
-	padding: 0.5em 2em;
+.pagbuilder-layout-aside .pagebuilder-column-1 article,
+.pagbuilder-layout-aside .pagebuilder-column-1 aside,
+.pagbuilder-layout-third-right .pagebuilder-column-1 article,
+.pagbuilder-layout-third-right .pagebuilder-column-1 aside {
+	margin-right: 2em;
 }
-
-#pagebuilder-tertiary-nav a:not(.selected) {
-	/*background: #ddd; - PC */
-	color: inherit;
-	/* PC adds/overrides */
-	opacity: 0.8;
+.pagbuilder-layout-third-left .pagebuilder-column-2 article,
+.pagbuilder-layout-third-left .pagebuilder-column-1 aside {
+	margin-left: 2em;
 }
-#pagebuilder-tertiary-nav a.selected {
-	/*background: #fff; - PC */
-	font-weight: bold;
+.pagbuilder-layout-half .pagebuilder-column-1 article,
+.pagbuilder-layout-half .pagebuilder-column-1 aside,
+.pagbuilder-layout-thirds div:not(.pagebuilder-column-3) article,
+.pagbuilder-layout-thirds div:not(.pagebuilder-column-3) aside,
+.pagbuilder-layout-fourths div:not(.pagebuilder-column-4) article,
+.pagbuilder-layout-fourths div:not(.pagebuilder-column-4) aside {
+	margin-right: 1em;
 }
-
-/** CSS HOOKS **********************************/
-
-/* no-side-margin */
-.pagebuilder-column aside.no-side-margin,
-.pagebuilder-column article.no-side-margin {
-	margin: 0 0 20px 0;
+.pagbuilder-layout-half .pagebuilder-column-2 article,
+.pagbuilder-layout-half .pagebuilder-column-2 aside,
+.pagbuilder-layout-thirds div:not(.pagebuilder-column-1) article,
+.pagbuilder-layout-thirds div:not(.pagebuilder-column-1) aside,
+.pagbuilder-layout-fourths div:not(.pagebuilder-column-1) article,
+.pagbuilder-layout-fourths div:not(.pagebuilder-column-1) aside {
+	margin-left: 1em;
 }
-
-/* no-bottom-margin */
-.pagebuilder-column aside.no-bottom-margin,
-.pagebuilder-column article.no-bottom-margin {
-	margin: 0 10px 0 10px;
+.pagebuilder-column article,
+.pagebuilder-column aside:not(.widget_page_title) {
+	margin-bottom: 1em;
 }
 
-/* no-margin */
-.pagebuilder-column aside.no-margin,
-.pagebuilder-column article.no-margin {
-	margin: 0;
+/* paddings */
+.pagebuilder-layout {
+	padding-bottom: 1em;
 }
+.pagebuilder-row .pagebuilder-column article,
+.pagebuilder-row .pagebuilder-column aside {
+	padding: 1em 2em;
+}
+
 
 /* ## SMALL (max 693)  */
 @media only screen and (max-width: 693px) {
-	#pagebuilder-tertiary-nav {
-		margin: 0;
+
+	.cahnrs-dynamic-frame .cahnrs-dynamic-window > article,
+	#cahnrs-dynamic-page-load {
+		margin: 0 0 2em 0;
 	}
-	.pagebuilder-row > div {
+	.pagebuilder-row .pagebuilder-column {
+		margin: 0;
 		width: 100% !important; /* Necessary in order to override inline styling */
 	}
-	.pagbuilder-layout-half > div > aside {
-		margin: 0 0 1em 0;
+	.pagebuilder-row .pagebuilder-column article,
+	.pagebuilder-row .pagebuilder-column aside {
+		margin: 0 0 1em 0 !important; /* Sad */
+		padding: 1em;
 	}
+
 }
