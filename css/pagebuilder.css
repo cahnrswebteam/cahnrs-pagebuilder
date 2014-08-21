@@ -1,4 +1,7 @@
-/* basic item styles */
+/**
+ * Basic item styles
+ * ----------------------------------------------------------------------------
+ */
 .pagebuilder-column img {
 	max-width: 100%;
 	height: auto;
@@ -7,7 +10,10 @@
 	max-width: 100% !important;
 }
 
-/* widths */
+/**
+ * Structure - widths
+ * ----------------------------------------------------------------------------
+ */
 .pagbuilder-layout-aside .pagebuilder-column-1 {
 	width: 75%;
 }
@@ -34,7 +40,10 @@
 	display: block;
 }
 
-/* margins */
+/**
+ * Structure - margins
+ * ----------------------------------------------------------------------------
+ */
 .cahnrs-dynamic-frame .cahnrs-dynamic-window > article,
 #cahnrs-dynamic-page-load {
 	margin: 0 1em 2em 2em;
@@ -70,7 +79,10 @@
 	margin-bottom: 1em;
 }
 
-/* paddings */
+/**
+ * Structure - padding
+ * ----------------------------------------------------------------------------
+ */
 .pagebuilder-layout {
 	padding-bottom: 1em;
 }
@@ -79,8 +91,22 @@
 	padding: 1em 2em;
 }
 
+/**
+ * Media Queries
+ * ----------------------------------------------------------------------------
+ */
+ 
+/* Small (max 791px) */
+@media screen and (max-width: 791px) and (min-device-width: 990px), screen and (max-width: 791px) and (orientation: portrait) and (max-device-width: 420px), screen and (max-width: 791px) and (orientation: landscape) and (max-device-width: 480px) {
 
-/* ## SMALL (max 693)  */
+	.cahnrs-dynamic-frame .cahnrs-dynamic-window > article,
+	#cahnrs-dynamic-page-load {
+		margin: 0 1em 2em 1em;
+	}
+
+}
+
+/* Small (max 693)  */
 @media only screen and (max-width: 693px) {
 
 	.cahnrs-dynamic-frame .cahnrs-dynamic-window > article,
@@ -93,7 +119,7 @@
 	}
 	.pagebuilder-row .pagebuilder-column article,
 	.pagebuilder-row .pagebuilder-column aside {
-		margin: 0 0 1em 0 !important; /* Sad */
+		margin: 0 0 1em 0 !important; /* Sad, evidently necessary to overrides :not selector rules */
 		padding: 1em;
 	}
 
