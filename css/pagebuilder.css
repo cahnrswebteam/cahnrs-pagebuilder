@@ -92,6 +92,16 @@
 }
 
 /**
+ * Float clearing (http://css-tricks.com/snippets/css/clear-fix/)
+ * ----------------------------------------------------------------------------
+ */
+.pagebuilder-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/**
  * Media Queries
  * ----------------------------------------------------------------------------
  */
