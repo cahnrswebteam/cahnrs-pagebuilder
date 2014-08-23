@@ -9,7 +9,6 @@ class site_view {
 		/************************************************
 		** START LAYOUT **
 		*************************************************/?>
-    	<section class="pagebuilder-layout" >
         <?php /************************************************
 		** Add third level nav to layout **
 		*************************************************/
@@ -49,8 +48,14 @@ class site_view {
                         ?><div id="<?php echo $row['id'].'-column-'.$c;?>" class="pagebuilder-column pagebuilder-column-<?php echo $c;?>" style="<?php echo $column_style;?>">
                         <?php if( $column['items']){
                         	foreach( $column['items'] as $item_key => $item ){
-								$tag = ( $item['settings']['is_content'] )? 'article' : 'aside';
-								$tag = ( 'page_content' == $item['id'] || 'content_block' == $item['id'] )? 'article' : $tag;
+								$is_content = ( isset( $item['settings']['is_content'] ) )? $item['settings']['is_content'] : false;
+								if( $is_content || 'page_content' == $item['id'] || 'content_block' == $item['id'] ){
+									$tag = 'div';
+								} else {
+									$tag = 'aside';
+								}
+								//$tag = ( $item['settings']['is_content'] )? 'div' : 'aside';
+								//$tag = ( 'page_content' == $item['id'] || 'content_block' == $item['id'] )? 'article' : $tag;
 								//$title = $this->get_title( $item );
 								$args = array();
 								$args['before_widget'] = $this->get_item_wrapper( $tag , 'before' , $item, $item_key );
@@ -73,7 +78,6 @@ class site_view {
                 </div>
         	<?php endif;?>
         <?php endforeach;?>
-        </section>
         <?php
 	}
 	
@@ -272,7 +276,7 @@ class site_view {
 		switch( $position ){
 			case 'before':
 				$title = $this->get_title( $item );
-				$wrapper = '<'.$tag.' id="'.$item_key.'" class="widget_'.$item['id'].' '.$item['settings']['css_hook'].'"><div class="item-inner-wrapper" >'.$title;
+				$wrapper = '<'.$tag.' id="'.$item_key.'" class="pagebuilder-item widget_'.$item['id'].' '.$item['settings']['css_hook'].'"><div class="item-inner-wrapper" >'.$title;
 				break;
 			default:
 				$wrapper = '<div style="clear:both"></div></div></'.$tag.'>';

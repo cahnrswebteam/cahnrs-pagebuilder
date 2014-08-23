@@ -14,10 +14,10 @@
  * Structure - widths
  * ----------------------------------------------------------------------------
  */
-.pagbuilder-layout-aside .pagebuilder-column-1 {
+.pagbuilder-layout-aside.pagebuilder-item .pagebuilder-column-1 {
 	width: 75%;
 }
-.pagbuilder-layout-aside .pagebuilder-column-2 {
+.pagbuilder-layout-aside.pagebuilder-item .pagebuilder-column-2 {
 	width: 25%;
 }
 .pagbuilder-layout-half .pagebuilder-column {
@@ -35,8 +35,8 @@
 	width: 33.33%;
 	width: calc(100% / 3);
 }
-.pagebuilder-column aside,
-.pagebuilder-column article {
+.pagebuilder-column aside.pagebuilder-item,
+.pagebuilder-column {
 	display: block;
 }
 
@@ -44,38 +44,38 @@
  * Structure - margins
  * ----------------------------------------------------------------------------
  */
-.cahnrs-dynamic-frame .cahnrs-dynamic-window > article,
+.cahnrs-dynamic-frame .cahnrs-dynamic-window > div.pagebuilder-item,
 #cahnrs-dynamic-page-load {
 	margin: 0 1em 2em 2em;
 }
-.pagbuilder-layout-aside .pagebuilder-column-1 article,
-.pagbuilder-layout-aside .pagebuilder-column-1 aside,
-.pagbuilder-layout-third-right .pagebuilder-column-1 article,
-.pagbuilder-layout-third-right .pagebuilder-column-1 aside {
+.pagbuilder-layout-aside .pagebuilder-column-1 div.pagebuilder-item,
+.pagbuilder-layout-aside .pagebuilder-column-1 aside.pagebuilder-item,
+.pagbuilder-layout-third-right .pagebuilder-column-1 div.pagebuilder-item,
+.pagbuilder-layout-third-right .pagebuilder-column-1 aside.pagebuilder-item {
 	margin-right: 2em;
 }
-.pagbuilder-layout-third-left .pagebuilder-column-2 article,
-.pagbuilder-layout-third-left .pagebuilder-column-1 aside {
+.pagbuilder-layout-third-left .pagebuilder-column-2 div.pagebuilder-item,
+.pagbuilder-layout-third-left .pagebuilder-column-1 aside.pagebuilder-item {
 	margin-left: 2em;
 }
-.pagbuilder-layout-half .pagebuilder-column-1 article,
-.pagbuilder-layout-half .pagebuilder-column-1 aside,
-.pagbuilder-layout-thirds div:not(.pagebuilder-column-3) article,
-.pagbuilder-layout-thirds div:not(.pagebuilder-column-3) aside,
-.pagbuilder-layout-fourths div:not(.pagebuilder-column-4) article,
-.pagbuilder-layout-fourths div:not(.pagebuilder-column-4) aside {
+.pagbuilder-layout-half .pagebuilder-column-1 div.pagebuilder-item,
+.pagbuilder-layout-half .pagebuilder-column-1 aside.pagebuilder-item,
+.pagbuilder-layout-thirds div:not(.pagebuilder-column-3) div.pagebuilder-item,
+.pagbuilder-layout-thirds div:not(.pagebuilder-column-3) aside.pagebuilder-item,
+.pagbuilder-layout-fourths div:not(.pagebuilder-column-4) div.pagebuilder-item,
+.pagbuilder-layout-fourths div:not(.pagebuilder-column-4) aside.pagebuilder-item {
 	margin-right: 1em;
 }
-.pagbuilder-layout-half .pagebuilder-column-2 article,
-.pagbuilder-layout-half .pagebuilder-column-2 aside,
-.pagbuilder-layout-thirds div:not(.pagebuilder-column-1) article,
-.pagbuilder-layout-thirds div:not(.pagebuilder-column-1) aside,
-.pagbuilder-layout-fourths div:not(.pagebuilder-column-1) article,
-.pagbuilder-layout-fourths div:not(.pagebuilder-column-1) aside {
+.pagbuilder-layout-half .pagebuilder-column-2 div.pagebuilder-item,
+.pagbuilder-layout-half .pagebuilder-column-2 aside.pagebuilder-item,
+.pagbuilder-layout-thirds div:not(.pagebuilder-column-1) div.pagebuilder-item,
+.pagbuilder-layout-thirds div:not(.pagebuilder-column-1) aside.pagebuilder-item,
+.pagbuilder-layout-fourths div:not(.pagebuilder-column-1) div.pagebuilder-item,
+.pagbuilder-layout-fourths div:not(.pagebuilder-column-1) aside.pagebuilder-item {
 	margin-left: 1em;
 }
-.pagebuilder-column article,
-.pagebuilder-column aside:not(.widget_page_title) {
+.pagebuilder-column div.pagebuilder-item,
+.pagebuilder-column aside.pagebuilder-item:not(.widget_page_title) {
 	margin-bottom: 1em;
 }
 
@@ -86,8 +86,8 @@
 .pagebuilder-layout {
 	padding-bottom: 1em;
 }
-.pagebuilder-row .pagebuilder-column article,
-.pagebuilder-row .pagebuilder-column aside {
+.pagebuilder-row .pagebuilder-column div.pagebuilder-item,
+.pagebuilder-row .pagebuilder-column aside.pagebuilder-item {
 	padding: 1em 2em;
 }
 
@@ -109,7 +109,7 @@
 /* Small (max 791px) */
 @media screen and (max-width: 791px) and (min-device-width: 990px), screen and (max-width: 791px) and (orientation: portrait) and (max-device-width: 420px), screen and (max-width: 791px) and (orientation: landscape) and (max-device-width: 480px) {
 
-	.cahnrs-dynamic-frame .cahnrs-dynamic-window > article,
+	.cahnrs-dynamic-frame .cahnrs-dynamic-window > div.pagebuilder-item,
 	#cahnrs-dynamic-page-load {
 		margin: 0 1em 2em 1em;
 	}
@@ -119,7 +119,7 @@
 /* Small (max 693)  */
 @media only screen and (max-width: 693px) {
 
-	.cahnrs-dynamic-frame .cahnrs-dynamic-window > article,
+	.cahnrs-dynamic-frame .cahnrs-dynamic-window > div.pagebuilder-item,
 	#cahnrs-dynamic-page-load {
 		margin: 0 0 2em 0;
 	}
@@ -127,8 +127,8 @@
 		margin: 0;
 		width: 100% !important; /* Necessary in order to override inline styling */
 	}
-	.pagebuilder-row .pagebuilder-column article,
-	.pagebuilder-row .pagebuilder-column aside {
+	.pagebuilder-row .pagebuilder-column div.pagebuilder-item,
+	.pagebuilder-row .pagebuilder-column aside.pagebuilder-item {
 		margin: 0 0 1em 0 !important; /* Sad, evidently necessary to overrides :not selector rules */
 		padding: 1em;
 	}
