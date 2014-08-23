@@ -81,7 +81,7 @@ class site_view {
         <?php
 	}
 	
-	public function get_email_view( $post , $layout_obj, $layout_model ){
+	public function get_email_view( $post , $layout_obj, $layout_model ){ 
 		/************************************************
 		** START LAYOUT **
 		*************************************************/
