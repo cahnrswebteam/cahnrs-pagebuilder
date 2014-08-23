@@ -102,6 +102,26 @@
 }
 
 /**
+ * Third tier/tabbed Navigtion
+ * ----------------------------------------------------------------------------
+ */
+#pagebuilder-tertiary-nav a {
+	background: rgba( 255, 255, 255, 0.9 );
+	display: inline-block;
+	margin-right: 1px;
+	padding: 0.5em 2em;
+}
+
+#pagebuilder-tertiary-nav a:not(.selected) {
+	color: inherit;
+	opacity: 0.8;
+}
+#pagebuilder-tertiary-nav a.selected {
+	font-weight: bold;
+}
+
+
+/**
  * Media Queries
  * ----------------------------------------------------------------------------
  */
@@ -129,7 +149,7 @@
 	}
 	.pagebuilder-row .pagebuilder-column div.pagebuilder-item,
 	.pagebuilder-row .pagebuilder-column aside.pagebuilder-item {
-		margin: 0 0 1em 0 !important; /* Sad, evidently necessary to overrides :not selector rules */
+		margin: 0 0 1em 0 !important; /* Sad, evidently necessary to override :not selector rules */
 		padding: 1em;
 	}
 
