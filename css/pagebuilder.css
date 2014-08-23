@@ -74,8 +74,8 @@
 .pagbuilder-layout-fourths div:not(.pagebuilder-column-1) aside.pagebuilder-item {
 	margin-left: 1em;
 }
-.pagebuilder-column div.pagebuilder-item,
-.pagebuilder-column aside.pagebuilder-item:not(.widget_page_title) {
+div.pagebuilder-item,
+aside.pagebuilder-item:not(.widget_page_title) {
 	margin-bottom: 1em;
 }
 
@@ -86,8 +86,8 @@
 .pagebuilder-layout {
 	padding-bottom: 1em;
 }
-.pagebuilder-row .pagebuilder-column div.pagebuilder-item,
-.pagebuilder-row .pagebuilder-column aside.pagebuilder-item {
+div.pagebuilder-item,
+aside.pagebuilder-item {
 	padding: 1em 2em;
 }
 
@@ -147,8 +147,8 @@
 		margin: 0;
 		width: 100% !important; /* Necessary in order to override inline styling */
 	}
-	.pagebuilder-row .pagebuilder-column div.pagebuilder-item,
-	.pagebuilder-row .pagebuilder-column aside.pagebuilder-item {
+	div.pagebuilder-item,
+	aside.pagebuilder-item {
 		margin: 0 0 1em 0 !important; /* Sad, evidently necessary to override :not selector rules */
 		padding: 1em;
 	}
