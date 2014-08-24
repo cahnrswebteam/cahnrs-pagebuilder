@@ -26,17 +26,19 @@ class render_site_control {
 			$layout_obj = $this->layout_model->get_layout_obj( $post );
 			ob_start();
 			$this->site_view->get_site_view( $post , $layout_obj , $this->layout_model );
-			$content = ob_get_clean();
 			$in_loop = false;
+			return ob_get_clean();
 		} 
 		else if ( is_singular('email') ){
+			$in_loop = true;
 			$layout_obj = $this->layout_model->get_layout_obj( $post );
 			ob_start();
 			$this->site_view->get_email_view( $post , $layout_obj , $this->layout_model );
-			$content = ob_get_clean();
+			$in_loop = false;
+			return ob_get_clean();
 		}
 	
-		return $content;
+		return '<div class="pagebuilder-item">'.$content.'</div>';
 	}
 	
 	public function add_scripts(){
