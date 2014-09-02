@@ -4,8 +4,8 @@
 * Plugin Name: CAHNRS Page Builder
 * Plugin URI: http://cahnrs.wsu.edu/communications
 * Description: Builds Custom Layouts For Pages/Posts
-* Version: 1.4
-* Author: CAHNRS Communication, Danial Bleile
+* Version: 1.5
+* Author: CAHNRS Communication, Danial Bleile, Phil Cabel
 * Author URI: http://URI_Of_The_Plugin_Author
 * License: GPL2
 */

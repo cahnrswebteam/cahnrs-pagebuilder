@@ -42,7 +42,7 @@ class render_site_control {
 	}
 	
 	public function add_scripts(){
-		wp_register_style( 'pagebuilder_css', URL . '/css/pagebuilder.css', false, '1.0.0' );
+		wp_register_style( 'pagebuilder_css', URL . '/css/pagebuilder.css', false, '1.1.0' );
         wp_enqueue_style( 'pagebuilder_css' );
 	}
 	
