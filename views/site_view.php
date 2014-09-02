@@ -1,29 +1,33 @@
 <?php namespace cahnrswp\pagebuilder;
 
 class site_view {
+
 	public $meta_base = '_pagebuilder';
 	public $content_base = '_pagebuilder_editors';
-	
-	public function get_site_view( $post , $layout_obj, $layout_model ){
+
+	public function get_site_view( $post, $layout_obj, $layout_model ) {
 		
 		/************************************************
 		** START LAYOUT **
-		*************************************************/?>
-        <?php /************************************************
+		*************************************************/
+		?>
+
+    <?php
+    /************************************************
 		** Add third level nav to layout **
 		*************************************************/
-		if( $layout_obj['tertiary_nav'] ){
-			echo '<nav id="pagebuilder-tertiary-nav">';
-			foreach( $layout_obj['tertiary_nav'] as $menu_item ){
+		if ( $layout_obj['tertiary_nav'] ) {
+			echo '<nav id="pagebuilder-tertiary-nav" role="navigation">';
+			echo '<ul>';
+			foreach ( $layout_obj['tertiary_nav'] as $menu_item ) {
 				$active = ( $menu_item->object_id == $post->ID )? 'selected' : 'inactive';
-				echo '<a class="'.$active.'" href="'.$menu_item->url.'">';
-					echo $menu_item->title;
-				echo '</a>';
+				echo '<li><a class="' . $active . '" href="' . $menu_item->url . '">' . $menu_item->title . '</a></li>';
 			}
+			echo '</ul>';
 			echo '</nav>';
 		}
 		//$this->get_third_level_nav( $post );
-        foreach( $layout_obj as $row ):?>
+    foreach( $layout_obj as $row ): ?>
         <?php 
 			/** TO DO: CONSOLIDATE THE COLUMN COUNT AND COULUMN STYLES INTO ONE ARRAY - DB **/
 			$column_count = $layout_model->get_columns_by_layout( $row['layout'] ); // GET COLUMN COUNT FOR NOW

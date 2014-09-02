@@ -93,22 +93,33 @@ aside.pagebuilder-item:not(.widget_page_title) {
  * ----------------------------------------------------------------------------
  */
 .pagebuilder-row:after {
-  content: "";
-  display: table;
-  clear: both;
+	content: "";
+	display: table;
+	clear: both;
 }
 
 /**
  * Third tier/tabbed Navigtion
  * ----------------------------------------------------------------------------
- */
+
+#pagebuilder-tertiary-nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#pagebuilder-tertiary-nav li {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	vertical-align: bottom;
+}
 #pagebuilder-tertiary-nav a {
 	background: rgba( 255, 255, 255, 0.9 );
 	display: inline-block;
 	margin-right: 1px;
 	padding: 0.5em 2em;
+	position: relative;
 }
-
 #pagebuilder-tertiary-nav a:not(.selected) {
 	color: inherit;
 	opacity: 0.8;
@@ -116,7 +127,34 @@ aside.pagebuilder-item:not(.widget_page_title) {
 #pagebuilder-tertiary-nav a.selected {
 	font-weight: bold;
 }
-
+ */
+#pagebuilder-tertiary-nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#pagebuilder-tertiary-nav li {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	vertical-align: bottom;
+}
+#pagebuilder-tertiary-nav a {
+	background: rgba( 255, 255, 255, 0.9 );
+	border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+	display: inline-block;
+	margin-right: 1px;
+	padding: 0.5em 2em;
+}
+#pagebuilder-tertiary-nav a.selected {
+	color: #5e6a71;
+	font-weight: bold;
+	position: relative;
+}
+#pagebuilder-tertiary-nav a:not(.selected) {
+	opacity: 0.8;
+}
 
 /**
  * Media Queries
@@ -131,9 +169,52 @@ aside.pagebuilder-item:not(.widget_page_title) {
 		margin: 0 1em 2em 1em;
 	}
 
+	/* Third tier/tabbed Navigtion (http://css-tricks.com/transformer-tabs/) */
+	#pagebuilder-tertiary-nav {
+		margin-bottom: 1em;
+	}
+	#pagebuilder-tertiary-nav ul {
+		background: rgba( 255, 255, 255, 0.9 );
+		overflow: hidden;
+		position: relative;
+	}
+	#pagebuilder-tertiary-nav ul::after {
+		content: "☰";
+		position: absolute;
+		top: 8px;
+		right: 15px;
+		z-index: 2;
+		pointer-events: none;
+	}
+	#pagebuilder-tertiary-nav li {
+		display: block;
+	}
+	#pagebuilder-tertiary-nav a {
+		background: none;
+		height: 100%;
+		left: 0;
+		margin: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+	#pagebuilder-tertiary-nav a.selected {
+		z-index: 1;
+	}
+	#pagebuilder-tertiary-nav a:not(.selected) {
+		opacity: 0;
+	}
+	#pagebuilder-tertiary-nav ul.open a {
+		position: relative;
+		display: block;
+	}
+	#pagebuilder-tertiary-nav ul.open a:not(.selected) {
+		opacity: 1;
+	}
+
 }
 
-/* Small (max 693)  */
+/* Small (max 693)	*/
 @media only screen and (max-width: 693px) {
 
 	.cahnrs-dynamic-frame .cahnrs-dynamic-window > div.pagebuilder-item,
@@ -148,6 +229,65 @@ aside.pagebuilder-item:not(.widget_page_title) {
 	aside.pagebuilder-item {
 		margin: 0 0 1em 0 !important; /* Sad, evidently necessary to override :not selector rules */
 		padding: 1em;
+	}
+
+	/* Third tier/tabbed Navigtion */
+	#pagebuilder-tertiary-nav {
+		margin-bottom: 1em;
+	}
+	#pagebuilder-tertiary-nav ul {
+		background: #fff;
+	}
+	#pagebuilder-tertiary-nav a {
+		padding: 0.5em 1em;
+	}
+
+}
+
+/* IOS fix for unshelved spine */
+@media only screen and (max-device-width: 480px) and (orientation: portrait), only screen and (max-device-width: 480px) and (orientation: landscape), only screen and (device-width: 768px) and (device-height: 1024px) and (orientation: portrait), only screen and (device-width: 768px) and (device-height: 1024px) and (orientation: landscape) {
+
+	/* Third tier/tabbed Navigtion (there must be a way around duping this, maybe one of the body classes) */
+	#pagebuilder-tertiary-nav {
+		margin-bottom: 1em;
+	}
+	#pagebuilder-tertiary-nav ul {
+		background: rgba( 255, 255, 255, 0.9 );
+		overflow: hidden;
+		position: relative;
+	}
+	#pagebuilder-tertiary-nav ul::after {
+		content: "☰";
+		position: absolute;
+		top: 8px;
+		right: 15px;
+		z-index: 2;
+		pointer-events: none;
+	}
+	#pagebuilder-tertiary-nav li {
+		display: block;
+	}
+	#pagebuilder-tertiary-nav a {
+		background: none;
+		height: 100%;
+		left: 0;
+		margin: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+	#pagebuilder-tertiary-nav a.selected {
+		z-index: 1;
+	}
+	#pagebuilder-tertiary-nav a:not(.selected) {
+		opacity: 0;
+	}
+	#pagebuilder-tertiary-nav ul.open a {
+		position: relative;
+		display: block;
+	}
+	#pagebuilder-tertiary-nav ul.open a:not(.selected) {
+		opacity: 1;
 	}
 
 }
