@@ -5,7 +5,7 @@ class item_content_block_model {
 	public $id = 'content_block';
 	public $name = 'Additional Content';
 	public $description = 'Adds additional text/content area to layout with an editor.';
-	public $subtype = 'content_item';
+	public $subtype = 'page_item';
 	
 	public function form(){
 		return 'form';

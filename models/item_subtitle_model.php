@@ -6,7 +6,7 @@ class item_subtitle_model {
 	public $name = 'Subtitle';
 	public $description = 'Adds a Subtitle to the page (H2).';
 	public $is_content = true;
-	public $subtype = 'content_item';
+	public $subtype = 'page_item';
 	
 	public function get_form( $instance, $ipt_name ){?>
     	<h4>Subtitle</h4>

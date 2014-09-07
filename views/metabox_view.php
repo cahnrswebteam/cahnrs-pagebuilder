@@ -408,34 +408,11 @@ class metabox_view {
                     <footer>
                     </footer>
                 </div>
-                <!-- START SIDEBARS -->
-                <div class="sub-section">
-                	<header>
-                    	Basic Content Items
-                    </header>
-                    <div class="sub-section-content">
-                    	<?php 
-						foreach( $this->layout_model->registered_items as $item_id ):
-						$item = $this->layout_model->get_item_object( array('type' => 'native' , 'id' => $item_id ) );?>
-                        <?php if( isset( $item->subtype ) && 'content_item' == $item->subtype  ):?>
-                            <div class="pagebuilder-item-wrapper">
-                            <a class="select-add-item pagebuilder-item native" href="#" data-id="<?php echo $item_id;?>"  data-type="native" >
-                                <span class="title"><?php echo $item->name;?></span>
-                                <span class="summary"><?php echo $item->description;?></span>
-                            </a>
-                            </div>
-                        <?php endif;?>
-                    	<?php endforeach;?>
-                    	<div style="clear: both"></div>
-                    </div>
-                    <footer>
-                    </footer>
-                </div>
                 <!-- START WIDGETS - POPULAR -->
                 <?php $pop_widg = $this->layout_model->get_popular_widgets();?>
                 <div class="sub-section">
                 	<header>
-                    	Popular Widgets
+                    	Frequently Used Items
                     </header>
                     <div class="sub-section-content">
 					<?php if ( !empty( $GLOBALS['wp_widget_factory'] ) ):?>

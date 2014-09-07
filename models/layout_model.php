@@ -81,11 +81,12 @@ class layout_model {
 		
 	public function get_popular_widgets(){
 		$widgets = array(
+			'cahnrs_insert_existing',
 			'CAHNRS_Slideshow_widget',
 			'CAHNRS_feed_widget',
 			'cahnrs_action_item',
 			'cahnrs_custom_gallery_widget',
-			'cahnrs_insert_item',
+			/*'cahnrs_insert_item',*/
 			'cahnrs_az_index',
 			
 		);
