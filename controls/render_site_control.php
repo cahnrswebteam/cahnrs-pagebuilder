@@ -20,6 +20,7 @@ class render_site_control {
 	public function render_site( $content ) {
 		global $post; 
 		global $in_loop;
+		global $force_builder;
 		if( $in_loop ) return $content;
 		if ( ( is_singular('post') || is_singular('page') ) /*&& is_main_query()*/ ) {
 			$in_loop = true;

@@ -108,7 +108,7 @@ class metabox_control {
 					  	
 						  $new_content .= '<!-- PRIMARY CONTENT -->'.$pb_editors_clean['primary_content'].'<!-- PRIMARY CONTENT -->';
 					  } 
-					  else if('content_block' == $item['id'] ){
+					  else if('content_block' == $item['id'] && isset( $item['settings']['is_content'] ) && $item['settings']['is_content'] ){
 						  $new_content .= '<aside id="'.$item_key.'" class="'.$item['id'].'" >'.$pb_editors_clean[ $item_key ].'</aside>';
 					  }
 					  else if( $item['settings']['is_content'] ){
@@ -127,6 +127,13 @@ class metabox_control {
 	}
 	
 	public function update_new_content( $post_id , $content ){
+		//global $post;
+		//$layout_model = new layout_model();
+		//$site_view = new site_view();
+		//$layout_obj = $layout_model->get_layout_obj( $post );
+		//ob_start();
+		//$site_view->get_site_view( $post , $layout_obj , $layout_model );
+		//$content = ob_get_clean();
 		remove_action( 'save_post', array( $this , 'save' ) );
 		wp_update_post( array( 'ID' => $post_id, 'post_content' => $content ) );
 		add_action( 'save_post', array( $this , 'save' ) );
@@ -136,7 +143,7 @@ class metabox_control {
 		global $post;
 		if( 'page' == $post->post_type || 'post' == $post->post_type ){
 			
-			wp_register_style( 'pagebuilder_metabox_css' , URL . '/css/metabox.css', false, '1.0.0' );
+			wp_register_style( 'pagebuilder_metabox_css' , URL . '/css/metabox.css', false, '1.2.0' );
 			
 			wp_enqueue_style( 'pagebuilder_metabox_css' );
 			
