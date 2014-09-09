@@ -247,7 +247,17 @@ aside.pagebuilder-item:not(.widget_page_title) {
 /* IOS fix for unshelved spine */
 @media only screen and (max-device-width: 480px) and (orientation: portrait), only screen and (max-device-width: 480px) and (orientation: landscape), only screen and (device-width: 768px) and (device-height: 1024px) and (orientation: portrait), only screen and (device-width: 768px) and (device-height: 1024px) and (orientation: landscape) {
 
-	/* Third tier/tabbed Navigtion (there must be a way around duping this, maybe one of the body classes) */
+	.pagebuilder-row .pagebuilder-column {
+		margin: 0;
+		width: 100% !important; /* Necessary in order to override inline styling */
+	}
+	div.pagebuilder-item,
+	aside.pagebuilder-item {
+		margin: 0 0 1em 0 !important; /* Sad, evidently necessary to override :not selector rules */
+		padding: 1em;
+	}
+
+	/* Third tier/tabbed Navigtion (maybe use the "size-lt-smallish" body class to get around duplication) */
 	#pagebuilder-tertiary-nav {
 		margin-bottom: 1em;
 	}
