@@ -277,7 +277,7 @@ class layout_model {
 			
 			if( $parent_id ){ // LET'S CHECK IF WE HAVE PARENTS
 				foreach( $id_menu as $key => $menu ){ // ONCE MORE LOOP THROUGH MENU
-					if( $menu->ID == $parent_id || $menu->menu_item_parent == $parent_id ){ // IF IS PARENT OR IS CHILD OF PARENT
+					if( $menu->menu_item_parent == $parent_id ){ // IF IS CHILD OF PARENT
 						$tertiary[] = $menu; // TOLD YOU WE'D SET IT LATER
 					} // END IF
 				} // END FOREACH
