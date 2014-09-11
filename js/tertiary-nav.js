@@ -1,6 +1,7 @@
 jQuery(document).ready(function($) {
-	$( '#pagebuilder-tertiary-nav a.selected' ).on( 'click', function(event) {
-		$(this).closest('ul').toggleClass('open');
+	$( 'body' ).on( 'click', '#pagebuilder-tertiary-nav a', function(event) {
+		$( this ).addClass('selected');
+		$(this).closest('ul').toggleClass('selected');
 		event.preventDefault();
 	});
 });
