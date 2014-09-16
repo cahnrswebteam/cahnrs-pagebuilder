@@ -169,12 +169,15 @@
 		position: relative;
 	}
 	#pagebuilder-tertiary-nav ul::after {
-		content: "☰";
-		position: absolute;
-		top: 8px;
-		right: 15px;
-		z-index: 2;
+		content: "\F501";
+		font-family: Spine-Icons;
 		pointer-events: none;
+		position: absolute;
+		right: 1em;
+		top: 0.6em;
+		z-index: 2;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing:  antialiased;
 	}
 	#pagebuilder-tertiary-nav li {
 		display: block;
