@@ -119,7 +119,7 @@
 }
 */
 #pagebuilder-tertiary-nav {
-	overflow: scroll;
+	overflow-x: scroll;
 }
 #pagebuilder-tertiary-nav ul {
 	list-style: none;
@@ -166,6 +166,7 @@
 	/* Third tier/tabbed Navigtion (http://css-tricks.com/transformer-tabs/) */
 	#pagebuilder-tertiary-nav {
 		margin-bottom: 1em;
+		overflow-x: hidden;
 	}
 	#pagebuilder-tertiary-nav ul {
 		background: rgba( 255, 255, 255, 0.9 );
@@ -256,6 +257,7 @@
 	/* Third tier/tabbed Navigtion (maybe use the "size-lt-smallish" body class to get around duplication) */
 	#pagebuilder-tertiary-nav {
 		margin-bottom: 1em;
+		overflow-x: hidden;
 	}
 	#pagebuilder-tertiary-nav ul {
 		background: rgba( 255, 255, 255, 0.9 );
