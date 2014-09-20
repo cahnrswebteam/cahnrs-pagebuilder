@@ -38,7 +38,7 @@ class site_view {
 				$row['layout'].'-empty' : $row['layout'];
         	if( isset( $row['columns'] ) ):?>
 				<?php $empty_aside = ( isset( $row['columns']['column-2'] ))? '' : 'empty-aside'; ?>
-                <div id="<?php echo $row['id'];?>" class="pagebuilder-row <?php echo $row['id'].' '.$row['layout'].' '.$empty_aside;?>" >
+                <div id="<?php echo $row['id'];?>" class="pagebuilder-row <?php echo $row['id'].' '.$row['layout'].' '.$empty_aside.' '.$row['class'];?>" >
                     <?php for( $i = 1; $i <= $column_count; $i++ ):
 						if( 'pagbuilder-layout-aside' == $row['layout'] ){
 							if( 1 == $i ) $c = 2;
