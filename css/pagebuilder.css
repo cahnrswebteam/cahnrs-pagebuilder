@@ -133,72 +133,104 @@
 }
 
 /**
- * Third tier/tabbed Navigtion
+ * Third Tier Navigtion (http://css-tricks.com/transformer-tabs/)
  * ----------------------------------------------------------------------------
-
-#pagebuilder-tertiary-nav ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-#pagebuilder-tertiary-nav li {
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	vertical-align: bottom;
-}
-#pagebuilder-tertiary-nav a {
-	background: rgba( 255, 255, 255, 0.9 );
-	display: inline-block;
-	margin-right: 1px;
-	padding: 0.5em 2em;
-	position: relative;
-}
-#pagebuilder-tertiary-nav a:not(.selected) {
-	color: inherit;
-	opacity: 0.8;
-}
-#pagebuilder-tertiary-nav a.selected {
-	font-weight: bold;
-}
-*/
-#pagebuilder-tertiary-nav {
-	overflow-x: scroll;
-}
-#pagebuilder-tertiary-nav ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	white-space: nowrap;
-}
-#pagebuilder-tertiary-nav li {
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	vertical-align: bottom;
-}
-#pagebuilder-tertiary-nav a {
-	background: rgba( 255, 255, 255, 0.9 );
-	border-top-left-radius: 1px;
-  border-top-right-radius: 1px;
-	display: inline-block;
-	margin-right: 1px;
-	padding: 0.5em 2em;
-}
-#pagebuilder-tertiary-nav  a{
-	color: #5e6a71;
-	font-weight: bold;
-	position: relative;
-	opacity: 0.8;
-}
-#pagebuilder-tertiary-nav .selected a {
-	opacity: 1;
-}
+ */
+/* Content */
 .pagebuilder-tertiary-page {
 	display: none;
 }
 .pagebuilder-tertiary-page.selected {
 	display: block;
+}
+/* Tabs */
+#pagebuilder-tertiary-nav {
+	overflow: hidden;
+}
+#pagebuilder-tertiary-nav ul {
+  list-style: none;
+  margin: 0;
+	padding: 0;
+	white-space: nowrap;
+}
+#pagebuilder-tertiary-nav li {
+  display: inline-block;
+	margin: 0;
+  padding: 0;
+  vertical-align: bottom;
+}
+#pagebuilder-tertiary-nav a {
+  background: rgba( 255, 255, 255, 0.9 );
+	border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+	color: #5e6a71;
+	display: inline-block;
+	font-weight: bold;
+	margin-right: 1px;
+	opacity: 0.8;
+	padding: 0.5em 2em;
+	position: relative;
+}
+#pagebuilder-tertiary-nav a:hover {
+	color: #981e32;
+}
+#pagebuilder-tertiary-nav li.selected a {
+  opacity: 1;
+  position: relative;
+}
+/* Drop-down for smaller screens */
+.size-small #pagebuilder-tertiary-nav {
+	margin-bottom: 1px;
+}
+.size-small #pagebuilder-tertiary-nav ul {
+	background: rgba( 255, 255, 255, 0.9 );
+	overflow: hidden;
+	position: relative;
+}
+.size-small #pagebuilder-tertiary-nav ul::after {
+	content: "\F501";
+	font-family: Spine-Icons;
+	pointer-events: none;
+	position: absolute;
+	right: 1em;
+	top: 0.6em;
+	z-index: 2;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing:  antialiased;
+}
+.size-small #pagebuilder-tertiary-nav ul:hover::after {
+	color: #981e32;
+}
+.size-small #pagebuilder-tertiary-nav ul.open::after {
+	color: #5e6a71;
+	content: "\F500";
+}
+.size-small #pagebuilder-tertiary-nav li {
+	display: block;
+}
+.size-small #pagebuilder-tertiary-nav a {
+	background: none;
+	color: #981e32;
+	height: 100%;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	width: calc( 100% - 4em );
+}
+.size-small #pagebuilder-tertiary-nav a:hover {
+	color: #c60c30;
+}
+.size-small #pagebuilder-tertiary-nav li.selected a {
+	color: #5e6a71;
+	opacity: 1;
+	z-index: 1;
+}
+.size-small #pagebuilder-tertiary-nav ul.open a {
+	display: block;
+	opacity: 1;
+	position: relative;
 }
 
 /**
@@ -212,53 +244,6 @@
 	.cahnrs-dynamic-frame .cahnrs-dynamic-window > .pagebuilder-item,
 	#cahnrs-dynamic-page-load {
 		margin: 0 1em 2em 1em;
-	}
-
-	/* Third tier/tabbed Navigtion (http://css-tricks.com/transformer-tabs/) */
-	#pagebuilder-tertiary-nav {
-		margin-bottom: 1em;
-		overflow-x: hidden;
-	}
-	#pagebuilder-tertiary-nav ul {
-		background: rgba( 255, 255, 255, 0.9 );
-		overflow: hidden;
-		position: relative;
-	}
-	#pagebuilder-tertiary-nav ul::after {
-		content: "\F501";
-		font-family: Spine-Icons;
-		pointer-events: none;
-		position: absolute;
-		right: 1em;
-		top: 0.6em;
-		z-index: 2;
-		-moz-osx-font-smoothing: grayscale;
-		-webkit-font-smoothing:  antialiased;
-	}
-	#pagebuilder-tertiary-nav li {
-		display: block;
-	}
-	#pagebuilder-tertiary-nav a {
-		background: none;
-		height: 100%;
-		left: 0;
-		margin: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
-	#pagebuilder-tertiary-nav a.selected {
-		z-index: 1;
-	}
-	#pagebuilder-tertiary-nav a:not(.selected) {
-		opacity: 0;
-	}
-	#pagebuilder-tertiary-nav ul.open a {
-		position: relative;
-		display: block;
-	}
-	#pagebuilder-tertiary-nav ul.open a:not(.selected) {
-		opacity: 1;
 	}
 
 }
@@ -280,17 +265,6 @@
 		padding: 1em;
 	}
 
-	/* Third tier/tabbed Navigtion */
-	#pagebuilder-tertiary-nav {
-		margin-bottom: 1em;
-	}
-	#pagebuilder-tertiary-nav ul {
-		background: #fff;
-	}
-	#pagebuilder-tertiary-nav a {
-		padding: 0.5em 1em;
-	}
-
 }
 
 /* IOS fix for unshelved spine */
@@ -303,53 +277,6 @@
 	.pagebuilder-item {
 		margin: 0 0 1em 0 !important; /* Sad, evidently necessary to override :not selector rules */
 		padding: 1em;
-	}
-
-	/* Third tier/tabbed Navigtion (maybe use the "size-lt-smallish" body class to get around duplication) */
-	#pagebuilder-tertiary-nav {
-		margin-bottom: 1em;
-		overflow-x: hidden;
-	}
-	#pagebuilder-tertiary-nav ul {
-		background: rgba( 255, 255, 255, 0.9 );
-		overflow: hidden;
-		position: relative;
-	}
-	#pagebuilder-tertiary-nav ul::after {
-		content: "\F501";
-		font-family: Spine-Icons;
-		pointer-events: none;
-		position: absolute;
-		right: 1em;
-		top: 0.6em;
-		z-index: 2;
-		-moz-osx-font-smoothing: grayscale;
-		-webkit-font-smoothing:  antialiased;
-	}
-	#pagebuilder-tertiary-nav li {
-		display: block;
-	}
-	#pagebuilder-tertiary-nav a {
-		background: none;
-		height: 100%;
-		left: 0;
-		margin: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
-	#pagebuilder-tertiary-nav a.selected {
-		z-index: 1;
-	}
-	#pagebuilder-tertiary-nav a:not(.selected) {
-		opacity: 0;
-	}
-	#pagebuilder-tertiary-nav ul.open a {
-		position: relative;
-		display: block;
-	}
-	#pagebuilder-tertiary-nav ul.open a:not(.selected) {
-		opacity: 1;
 	}
 
 }

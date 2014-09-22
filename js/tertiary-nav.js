@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-	$( 'body' ).on( 'click', '#pagebuilder-tertiary-nav a.selected', function(event) {
+	$( 'body' ).on( 'click', '#pagebuilder-tertiary-nav .selected a', function(event) {
 		//$( this ).addClass('selected');
 		//$(this).closest('ul').toggleClass('selected');
 		//event.preventDefault();
