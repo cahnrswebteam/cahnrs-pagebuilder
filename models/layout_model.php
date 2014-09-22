@@ -88,6 +88,7 @@ class layout_model {
 			'cahnrs_custom_gallery_widget',
 			/*'cahnrs_insert_item',*/
 			'cahnrs_az_index',
+			'cahnrs_insert_video',
 			
 		);
 		return $widgets;

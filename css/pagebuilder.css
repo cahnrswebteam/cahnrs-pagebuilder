@@ -185,13 +185,20 @@
 	margin-right: 1px;
 	padding: 0.5em 2em;
 }
-#pagebuilder-tertiary-nav a.selected {
+#pagebuilder-tertiary-nav  a{
 	color: #5e6a71;
 	font-weight: bold;
 	position: relative;
-}
-#pagebuilder-tertiary-nav a:not(.selected) {
 	opacity: 0.8;
+}
+#pagebuilder-tertiary-nav .selected a {
+	opacity: 1;
+}
+.pagebuilder-tertiary-page {
+	display: none;
+}
+.pagebuilder-tertiary-page.selected {
+	display: block;
 }
 
 /**
