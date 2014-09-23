@@ -41,7 +41,7 @@ class layout_model {
 			'column-1' => 'display:block;' 
 			),
 		'pagbuilder-layout-aside' => array( 
-			'column-1' => 'display:block; margin-right: 250px; width: auto; overflow: hidden', 
+			'column-1' => 'display:block; width: auto; overflow: hidden', 
 			'column-2' => 'float: right; width: 250px;', 
 			),
 		'pagbuilder-layout-aside-empty' => array( 
