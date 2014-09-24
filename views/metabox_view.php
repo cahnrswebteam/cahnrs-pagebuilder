@@ -333,6 +333,11 @@ class metabox_view {
                     else { $content_checked = 0;}?>
                     <input style="display: none;" type="checkbox" name="<?php echo $input_name;?>[settings][is_content]" value="0" checked="checked" />
                     <input type="checkbox" name="<?php echo $input_name;?>[settings][is_content]" value="1"  <?php checked( $content_checked, 1 ); ?> /> Include as Content</p>
+                    <p>
+                    <?php $force_first = ( isset( $item_array['settings']['force_mobile_first'] ) )? $item_array['settings']['force_mobile_first'] : 0;?>
+                    <input style="display: none;" type="checkbox" name="<?php echo $input_name;?>[settings][force_mobile_first]" value="0" checked="checked" />
+                    <input type="checkbox" name="<?php echo $input_name;?>[settings][force_mobile_first]" value="1"  <?php checked( $force_first, 1 ); ?> /> Force First - Responsive
+                    </p>
                     <p>CSS Hook: <input type="text" name="<?php echo $input_name;?>[settings][css_hook]" value="<?php echo $item_array['settings']['css_hook'];?>" /></p> 
                     		</div>
                     	</div>

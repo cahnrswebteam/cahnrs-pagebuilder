@@ -15,6 +15,9 @@
 .pagebuilder-column iframe {
 	max-width: 100% !important; 
 }
+#pagebuilder-force-first {
+	display: none;
+}
 /**
  * Row Hooks
  * ----------------------------------------------------------------------------

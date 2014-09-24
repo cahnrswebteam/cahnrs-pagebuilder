@@ -13,6 +13,48 @@ class site_view {
 		?>
 
     <?php
+	/***********************************************
+	** Start Force First for Responsive Layouts **
+	************************************************/
+	echo '<div id="pagebuilder-force-first" class="pagebuilder-row" >';
+	foreach( $layout_obj as $row ){
+		if( isset( $row['columns'] ) ){
+			foreach( $row['columns'] as $column ){
+				if( isset( $column['items'] )){
+					foreach( $column['items'] as $item_key => $item ){
+						if( isset( $item['settings']['force_mobile_first'] ) && $item['settings']['force_mobile_first'] ){
+							$is_content = ( isset( $item['settings']['is_content'] ) )? $item['settings']['is_content'] : false;
+								if( $is_content || 'page_content' == $item['id'] || 'content_block' == $item['id'] ){
+									$tag = 'div';
+								} else {
+									$tag = 'aside';
+								}
+								//$tag = ( $item['settings']['is_content'] )? 'div' : 'aside';
+								//$tag = ( 'page_content' == $item['id'] || 'content_block' == $item['id'] )? 'article' : $tag;
+								//$title = $this->get_title( $item );
+								$args = array();
+								$args['before_widget'] = $this->get_item_wrapper( $tag , 'before' , $item, $item_key );
+								$args['after_widget'] = $this->get_item_wrapper( $tag );
+								switch( $item['type'] ){
+									case 'native' :
+										echo $args['before_widget'];
+										$item_obj = $layout_model->get_item_object( $item );
+										$item_obj->item_render_site( $post , $item );
+										echo $args['after_widget'];
+										break;
+									case 'widget' :
+										\the_widget( $item['id'] , $item['settings'], $args );
+										break;
+								};
+						}
+					}
+				}
+			}
+		}
+	}
+	echo '</div>';
+	
+	
     foreach( $layout_obj as $row ): ?>
         <?php 
 			/** TO DO: CONSOLIDATE THE COLUMN COUNT AND COULUMN STYLES INTO ONE ARRAY - DB **/
@@ -268,8 +310,9 @@ class site_view {
 	private function get_item_wrapper( $tag , $position = 'after' , $item = array(), $item_key = '' ){
 		switch( $position ){
 			case 'before':
+				$force_first = ( isset( $item['settings']['force_mobile_first'] ) && $item['settings']['force_mobile_first'] )? ' pagebuilder-force-first' : '';
 				$title = $this->get_title( $item );
-				$wrapper = '<'.$tag.' id="'.$item_key.'" class="pagebuilder-item widget_'.$item['id'].' '.$item['settings']['css_hook'].'"><div class="item-inner-wrapper" >'.$title;
+				$wrapper = '<'.$tag.' id="'.$item_key.'" class="pagebuilder-item widget_'.$item['id'].' '.$item['settings']['css_hook'].$force_first.'"><div class="item-inner-wrapper" >'.$title;
 				break;
 			default:
 				$wrapper = '<div style="clear:both"></div></div></'.$tag.'>';
