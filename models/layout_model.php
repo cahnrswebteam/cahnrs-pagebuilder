@@ -89,6 +89,8 @@ class layout_model {
 			/*'cahnrs_insert_item',*/
 			'cahnrs_az_index',
 			'cahnrs_insert_video',
+			'cahnrs_iframe',
+			'cahnrs_surveygizmo_embed',
 			
 		);
 		return $widgets;
