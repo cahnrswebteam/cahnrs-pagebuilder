@@ -68,12 +68,12 @@ class site_view {
 				<?php $empty_aside = ( isset( $row['columns']['column-2'] ))? '' : 'empty-aside'; ?>
                 <div id="<?php echo $row['id'];?>" class="pagebuilder-row <?php echo $row['id'].' '.$row['layout'].' '.$empty_aside.' '.$row['class'];?>" >
                     <?php for( $i = 1; $i <= $column_count; $i++ ):
-						if( 'pagbuilder-layout-aside' == $row['layout'] ){
-							if( 1 == $i ) $c = 2;
-							if( 2 == $i ) $c = 1;
-						} else {
+						//if( 'pagbuilder-layout-aside' == $row['layout'] ){
+							///if( 1 == $i ) $c = 2;
+							//if( 2 == $i ) $c = 1;
+						//} else {
 							$c = $i;
-						}
+						//}
 						$column_id = 'column-'.$c;
 						$column = ( isset( $row['columns'][$column_id]) )? $row['columns'][$column_id] : array();
 						$column_style = $layout_model->layout_styles[ $row['layout'] ][ $column_id ];
