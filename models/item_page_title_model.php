@@ -27,7 +27,7 @@ class item_page_title_model {
         <h1 class="site-title"><?php echo $instance['settings']['title'];?></h1>
         <?php else:?>
 		<h1 class="site-title pagebuilder-site-title"><?php echo get_the_title($post->ID );?></h1>
-        <style type="text/css">h1 {display: none !important;} h1.pagebuilder-site-title { display: block !important; } </style>
+        <style type="text/css">/*h1 {display: none !important;} - PC */.article-title { display: none; }/* h1.pagebuilder-site-title { display: block; }*/</style>
         <?php endif;?>
 	<?php }
 	
