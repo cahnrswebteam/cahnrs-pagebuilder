@@ -19,9 +19,19 @@
 	display: none;
 }
 /**
- * Row Hooks
+ * Hooks
  * ----------------------------------------------------------------------------
  */
+.pagebuilder-item.marginless { 
+	margin: 0 !important;
+}
+.pagebuilder-item.tight { 
+	padding: 0 !important;
+}
+.pagebuilder-item.image-full img { 
+	height: auto;
+	width: 100% !important;
+}
 .pagebuilder-row.white:before {
 	content: ' ';
 	position: absolute;

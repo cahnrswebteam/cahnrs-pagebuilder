@@ -91,10 +91,10 @@ class render_site_control {
 	}
 	
 	public function add_scripts(){
-		\wp_register_style( 'pagebuilder_css', URL . '/css/pagebuilder.css', false, '1.5.0' );
+		\wp_register_style( 'pagebuilder_css', URL . '/css/pagebuilder.css', false, '1.6.0' );
 		\wp_enqueue_style( 'pagebuilder_css' );
 		// Preferably enqueue this conditionally
-		\wp_enqueue_script( 'tertiary-nav', URL . '/js/tertiary-nav.js', array( 'jquery' ), '1.7.0' );
+		\wp_enqueue_script( 'tertiary-nav', URL . '/js/tertiary-nav.js', array( 'jquery' ), '1.8.0' );
 	}
 	
 }
