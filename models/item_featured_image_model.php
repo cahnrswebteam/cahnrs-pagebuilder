@@ -8,6 +8,21 @@ class item_featured_image_model {
 	public $subtype = 'page_item';
 	
 	public function get_form( $instance, $ipt_name ){
+		$vals = array();
+		$vals['full'] = 'Full Size';
+		$image_sizes = \get_intermediate_image_sizes();
+		foreach ( $image_sizes as $size_name ){
+			$vals[ $size_name ] = $size_name;
+		}
+		echo '<p>'; 
+		echo '<label>Image Size: </label>';
+		echo '<select name="'.$ipt_name.'[image_size]" >';
+			$size = ( isset( $instance['image_size'] ) )? $instance['image_size'] : 'large';
+			foreach( $vals as $id => $title ){
+				echo '<option value="'.$id.'" '.selected( $id, $size , false ).'>'.$title.'</option>';
+			}
+			echo '</select>';
+		echo '</p>';
 	}
 	
 	public function render_site( $post ){
@@ -22,6 +37,7 @@ class item_featured_image_model {
 	public function item_render_site( $post , $instance ){
 		if( has_post_thumbnail( $post->ID ) ){
 			$size = ( 'email' == $post->post_type )? 'email-700' : 'large';
+			if( isset( $instance['image_size'] ) ) $size = $instance['image_size'];
 			echo '<div class="featured_image column-item">';
 				echo get_the_post_thumbnail( $post->ID, $size );
 			echo '</div>';
