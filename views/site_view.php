@@ -6,6 +6,9 @@ class site_view {
 	public $content_base = '_pagebuilder_editors';
 
 	public function get_site_view( $post, $layout_obj, $layout_model ) {
+		$sets = get_option( '_pagebuilder_settings' );
+		$pos = ( isset( $sets['tertiary'] ) )? $sets['tertiary'] : 0;
+		
 		
 		/************************************************
 		** START LAYOUT **
@@ -57,6 +60,8 @@ class site_view {
 	
     foreach( $layout_obj as $row ): ?>
         <?php 
+			if( $pos && ( ( 'row-100' == $row['id'] && 'header-before' == $pos ) || ( 'row-200' == $row['id'] && 'footer-before' == $pos )  ) )
+			 	$this->add_tertiary_nav( $post , $layout_obj , $layout_model );
 			/** TO DO: CONSOLIDATE THE COLUMN COUNT AND COULUMN STYLES INTO ONE ARRAY - DB **/
 			$column_count = $layout_model->get_columns_by_layout( $row['layout'] ); // GET COLUMN COUNT FOR NOW
 			/*************************************
@@ -109,11 +114,57 @@ class site_view {
 					endfor;?>
                 </div>
         	<?php endif;?>
+            <?php 
+			if( $pos && ( ( 'row-100' == $row['id'] && 'header-after' == $pos ) || ( 'row-200' == $row['id'] && 'footer-after' == $pos )  ) )
+			 	$this->add_tertiary_nav( $post , $layout_obj , $layout_model );
+				?>
         <?php endforeach;?>
         <?php
 	}
 	
-	public function get_tertiary_nav( $post, $layout_obj, $layout_model ){
+	private function add_tertiary_nav( $post , $layout_obj , $layout_model ){
+		/************************************************
+		** Add third level nav to layout **
+		*************************************************/
+		echo '<nav id="pagebuilder-tertiary-nav" role="navigation"><ul>';
+		if ( $layout_obj['tertiary_nav'] ) {
+			$is_active = false;
+			$i = 0;
+			foreach ( $layout_obj['tertiary_nav'] as $menu_item ){
+				if( $menu_item->object_id == $post->ID ) $is_active = $post->ID;
+			}
+			foreach ( $layout_obj['tertiary_nav'] as $menu_item ) {
+				if( $is_active ){
+					$active = (  $is_active == $menu_item->object_id  )? 'selected' : '';
+				} 
+				else {
+					$active = (  0 == $i )? 'selected' : '';
+				}
+				$dynamic = ( $menu_item->type == 'post_type' )? 'is-dynamic' : '';
+				echo '<li class="' . $active . '"><a class="'.$dynamic.'" href="' . $menu_item->url . '" data-index="'.$i.'">' . $menu_item->title . '</a></li>';
+				$i++;
+			}
+			
+			/*$i = 0;
+			foreach ( $layout_obj['tertiary_nav'] as $menu_item ) {
+				if( $is_active ){
+					$active = (  $is_active == $menu_item->object_id  )? 'selected' : 'inactive';
+				} 
+				else {
+					$active = (  0 == $i )? 'selected' : '';
+				}
+				if( $menu_item->type == 'post_type' ){
+					echo '<div class="pagebuilder-tertiary-page tertiary-'.$i.' '.$active.'" >';
+					$post = get_post( $menu_item->object_id );
+					$lay_obj = $this->layout_model->get_layout_obj( $post );
+					$this->site_view->get_site_view( $post , $lay_obj , $layout_model );
+					echo '</div>';
+				}
+				$i++;
+			}*/
+		}
+		echo '</ul></nav>';
+		//$this->get_third_level_nav( $post );
 	}
 	
 	public function get_email_view( $post , $layout_obj, $layout_model ){ 
