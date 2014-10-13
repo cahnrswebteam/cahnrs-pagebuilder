@@ -6,6 +6,11 @@ class item_featured_image_model {
 	public $name = 'Featured Image';
 	public $description = 'If a featured image is set, displays the featured image.';
 	public $subtype = 'page_item';
+	public $instance;
+	
+	public function __construct( $instance = array() ){
+		$this->instance = $instance;
+	}
 	
 	public function get_form( $instance, $ipt_name ){
 		$vals = array();
@@ -42,6 +47,18 @@ class item_featured_image_model {
 				echo get_the_post_thumbnail( $post->ID, $size );
 			echo '</div>';
 		}
+	}
+	
+	public function render_html_email( $pagebuilder_model ){
+		$post = $pagebuilder_model->post;
+		if( has_post_thumbnail( $post->ID ) ){
+			//$size = ( 'email' == $post->post_type )? 'email-700' : 'large';
+			//if( isset( $this->instance['settings']['image_size'] ) ) $size = $this->instance['settings']['image_size'];
+			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
+			$image = '<img src="'.$image[0].'" width="700" style="width: 700px; height: auto;" />';
+			return '<tr><td>'.$image.'</td></tr>';
+		}
+		return '<tr><td></td></tr>';
 	}
 	
 };?>

@@ -3,6 +3,7 @@
 class metabox_control {
 	
 	public $layout_model;
+	public $apply_types = array( 'post', 'page' , 'email', 'html_email' ); 
 	
 	public function __construct(){
 		$this->layout_model = new layout_model();
@@ -17,8 +18,8 @@ class metabox_control {
 	}
 	
 	public function add_meta_box( $post_type ){
-		$post_types = array( 'post', 'page' , 'email' );     //limit meta box to certain post types
-		if ( in_array( $post_type, $post_types )) {
+		//$post_types = array( 'post', 'page' , 'email', 'html_email' );     //limit meta box to certain post types
+		if ( in_array( $post_type, $this->apply_types ) ) {
 			add_meta_box(
 				'page_builder'
 				,__( 'CAHNRS Custom Page Builder' )
@@ -141,8 +142,7 @@ class metabox_control {
 	
 	public function add_scripts(){
 		global $post;
-		if( 'page' == $post->post_type || 'post' == $post->post_type ){
-			
+		if ( in_array( $post->post_type, $this->apply_types ) ) {	
 			wp_register_style( 'pagebuilder_metabox_css' , URL . '/css/metabox.css', false, '1.2.0' );
 			
 			wp_enqueue_style( 'pagebuilder_metabox_css' );

@@ -6,6 +6,11 @@ class item_page_content_model {
 	public $name = 'Primary Content';
 	public $description = 'Content from the standard Wordpress editor.';
 	public $subtype = 'page_item';
+	public $instance;
+	
+	public function __construct( $instance = array() ){
+		$this->instance = $instance;
+	}
 	
 	public function form($instance, $ipt_name){
 	}
@@ -29,6 +34,10 @@ class item_page_content_model {
 		}
 		//echo \apply_filters('pagebuilder_the_content', $content ); // APPLY FILTERS AND ECHO 
 		echo \apply_filters('the_content', $content );
+	}
+	
+	public function render_html_email( $pagebuilder_model ){
+		return '<tr><td>'.$pagebuilder_model->content.'</td></tr>';
 	}
 	
 };?>

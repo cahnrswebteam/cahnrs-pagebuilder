@@ -7,6 +7,11 @@ class item_page_title_model {
 	public $description = 'Adds the title to the page (H1).';
 	public $is_content = false;
 	public $subtype = 'page_item';
+	public $instance;
+	
+	public function __construct( $instance = array() ){
+		$this->instance = $instance;
+	}
 	
 	public function get_form( $instance, $ipt_name ){?>
     	<h4>Alternate Title</h4>
@@ -30,5 +35,16 @@ class item_page_title_model {
         <style type="text/css">/*h1 {display: none !important;} - PC */.article-title { display: none; }/* h1.pagebuilder-site-title { display: block; }*/</style>
         <?php endif;?>
 	<?php }
+	
+	public function render_html_email( $pagebuilder_model ){
+		$post = $pagebuilder_model->post;
+		$settings = $this->instance['settings'];
+		if( isset( $settings['title'] ) && $settings['title'] ){
+			$title = '<h1 class="site-title">'.$settings['title'].'</h1>';
+		} else {
+			$title = '<h1 class="site-title pagebuilder-site-title">'.get_the_title($post->ID ).'</h1>';
+		}
+		return '<tr><td>'.$title.'</td></tr>';
+	}
 	
 };?>

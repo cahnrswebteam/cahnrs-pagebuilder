@@ -7,6 +7,11 @@ class item_subtitle_model {
 	public $description = 'Adds a Subtitle to the page (H2).';
 	public $is_content = true;
 	public $subtype = 'page_item';
+	public $instance;
+	
+	public function __construct( $instance = array() ){
+		$this->instance = $instance;
+	}
 	
 	public function get_form( $instance, $ipt_name ){?>
     	<h4>Subtitle</h4>
@@ -25,5 +30,11 @@ class item_subtitle_model {
 	public function item_render_site( $post , $instance ){?>
 		<h2 class="site-subtitle"><?php echo $instance['settings']['title'];?></h2>
 	<?php }
+	
+	public function render_html_email( $pagebuilder_model ){
+		$post = $pagebuilder_model->post;
+		$settings = $this->instance['settings'];
+		return '<tr><td><h2>'.$settings['title'].'</h2></td></tr>';
+	}
 	
 };?>
