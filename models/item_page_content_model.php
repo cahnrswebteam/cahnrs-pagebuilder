@@ -37,7 +37,9 @@ class item_page_content_model {
 	}
 	
 	public function render_html_email( $pagebuilder_model ){
-		return '<tr><td>'.$pagebuilder_model->content.'</td></tr>';
+		$content = explode( '<!-- PRIMARY CONTENT -->' , $pagebuilder_model->content );
+		$content = ( count( $content ) > 1 )? $content[1] : implode( $content );
+		return '<tr><td>'.$content.'</td></tr>';
 	}
 	
 };?>

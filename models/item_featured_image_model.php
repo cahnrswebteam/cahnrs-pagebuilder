@@ -52,10 +52,8 @@ class item_featured_image_model {
 	public function render_html_email( $pagebuilder_model ){
 		$post = $pagebuilder_model->post;
 		if( has_post_thumbnail( $post->ID ) ){
-			//$size = ( 'email' == $post->post_type )? 'email-700' : 'large';
-			//if( isset( $this->instance['settings']['image_size'] ) ) $size = $this->instance['settings']['image_size'];
 			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
-			$image = '<img src="'.$image[0].'" width="700" style="width: 700px; height: auto;" />';
+			$image = '<img src="'.$image[0].'" width="700" style="width: 700px; height: auto; max-width: 100%;" />';
 			return '<tr><td>'.$image.'</td></tr>';
 		}
 		return '<tr><td></td></tr>';
