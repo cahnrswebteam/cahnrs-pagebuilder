@@ -53,7 +53,7 @@ class item_featured_image_model {
 		$post = $pagebuilder_model->post;
 		if( has_post_thumbnail( $post->ID ) ){
 			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
-			$image = '<img src="'.$image[0].'" width="700" style="width: 700px; height: auto; max-width: 100%;" />';
+			$image = '<img src="'.$image[0].'" width="700" style="width: 700px; height: auto; max-width: 100%; display: block;" />';
 			return '<tr><td>'.$image.'</td></tr>';
 		}
 		return '<tr><td></td></tr>';

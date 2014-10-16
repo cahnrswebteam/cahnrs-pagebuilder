@@ -10,12 +10,16 @@ class layout_email_view {
 	}
 	
 	public function get_email(){
+		global $email_styles;
+		$layout_width = ( isset( $email_styles['layout-width'] ) )? $email_styles['layout-width'] : $this->pagebuilder_model->width;
+		$row_bg = ( isset( $email_styles['content-row']['bgcolor'] ) )? $email_styles['content-row']['bgcolor'] : '';
 		if( $this->pagebuilder_model->layout ){
 			foreach( $this->pagebuilder_model->layout as $rowid => $row ){
-				$layout.= '<table width="'.$this->pagebuilder_model->width.'px"><tr>';
+				$bg_color = ( 'row-100' !== $rowid )? $row_bg : ''; 
+				$layout.= '<table bgcolor="'.$bg_color.'" style="border-collapse: collapse;" align="center" cellpadding="0" cellspacing="0" width="'.$layout_width.'"><tr>';
 				for( $c = 1; $c <= $row['column_count']; $c++){
 					$col_width_ratio = $row['columns']['column-'.$c]['width'];
-					$col_width = $col_width_ratio * $this->pagebuilder_model->width;
+					$col_width = $col_width_ratio * $layout_width;
 					$col_css = array();
 					if( 'row-100' != $rowid ){
 						$col_padding = 30 * $col_width_ratio;
@@ -23,16 +27,19 @@ class layout_email_view {
 						$col_css[] = 'padding-left: '.$col_padding.'px;';
 						$col_css[] = 'padding-right: '.$col_padding.'px;';
 					}
-					$layout.= '<td width="'.$col_width.'" style="'.implode( ' ', $col_css ).'" valign="top">';
+					$layout.= '<td width="'.$col_width.'" style="'.implode( ' ', $col_css ).'" valign="top"><br />&nbsp;<br />';
 					if( isset( $row['columns']['column-'.$c]['items'] ) ){
 						
 						foreach( $row['columns']['column-'.$c]['items'] as $itemKey => $item ){
 								$item_width = ( isset( $col_padding ) )? 
 									( $col_width - ( 2 * $col_padding ) ): 
-									$this->pagebuilder_model->width;
-								$args['before_widget'] = '<table width="'.$item_width.'" style="width:'.$item_width.'px;">';
-								$args['after_widget'] = '</table>';
+									$layout_width;
+								$args['before_widget'] = '<table width="'.$item_width.'" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width:'.$item_width.'px;">';
+								$args['after_widget'] = '<tr></table>';
 								if( isset( $item->ID ) ){
+									ob_start();
+									\the_widget( $item->ID , $item->settings , $args );
+									$layout.= ob_get_clean();
 								} 
 								else if( is_object( $item ) ) {
 									if( method_exists( $item , 'render_html_email' ) ){
@@ -47,7 +54,7 @@ class layout_email_view {
 					}
 					$layout.= '</td>';
 				}
-				$layout.= '</tr><tr><td>&nbsp;</td></tr></table>';
+				$layout.= '</tr></table>';
 			}
 		}
 		return $layout;

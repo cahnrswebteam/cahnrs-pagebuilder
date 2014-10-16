@@ -23,7 +23,7 @@ class render_site_control {
 	public function get_email_template( $template ){
 		global $post;
 		if( 'html_email' == $post->post_type ){
-			$template = DIR.'templates/html_email.php';
+			$template = DIR.'html-email-themes/html_email.php';
 		}
 		return $template;
 	}

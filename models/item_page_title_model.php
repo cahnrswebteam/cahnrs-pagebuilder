@@ -40,9 +40,9 @@ class item_page_title_model {
 		$post = $pagebuilder_model->post;
 		$settings = $this->instance['settings'];
 		if( isset( $settings['title'] ) && $settings['title'] ){
-			$title = '<h1 class="site-title">'.$settings['title'].'</h1>';
+			$title = '<h1 class="site-title" style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px;">'.$settings['title'].'</h1>';
 		} else {
-			$title = '<h1 class="site-title pagebuilder-site-title">'.get_the_title($post->ID ).'</h1>';
+			$title = '<h1 class="site-title pagebuilder-site-title" style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px;">'.get_the_title($post->ID ).'</h1>';
 		}
 		return '<tr><td>'.$title.'</td></tr>';
 	}

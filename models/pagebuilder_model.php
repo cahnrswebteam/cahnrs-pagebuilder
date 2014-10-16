@@ -101,6 +101,7 @@ class pagebuilder_model {
 										$item_obj->ID = $item['id'];
 										$item_obj->NID = $item['instance'];
 										$item_obj->settings = $item['settings'];
+										$item = $item_obj;
 									  break;
 							  }; // End Switch
 						} // End foreach
