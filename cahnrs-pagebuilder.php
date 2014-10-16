@@ -26,6 +26,8 @@ class cahnrs_pagebuilder{
 		if ( is_admin() ) { 
 			add_action( 'load-post.php', array( $this , 'init_admin_post' ) );
 			add_action( 'load-post-new.php', array( $this , 'init_admin_post' ) );
+			$settings = new settings_control();
+			add_action( 'admin_init', array( $settings ,'register_settings' ) );
 		}
 		if( isset( $_GET['cahnrs-pagebuilder'] ) ){
 			$ajax_control = new ajax_page_control();
