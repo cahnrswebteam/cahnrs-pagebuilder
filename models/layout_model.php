@@ -1,6 +1,20 @@
 <?php namespace cahnrswp\pagebuilder;
 
 class layout_model {
+	public $post;
+	public $tertiary_nav;
+	public $settings;
+	public $tertiary_position = false;
+	
+	public function __construct( $post = false ){
+		$this->settings = \get_option( '_pagebuilder_settings' );
+		if( $post ) { 
+			$this->post = $post;
+			$this->tertiary_nav = $this->get_tertiary_nav( $this->post );
+			$this->tertiary_position = ( $this->tertiary_nav && isset( $this->settings['tertiary'] )  )? 
+				$this->settings['tertiary'] : 'after'; 
+		}
+	}
 	
 	public $row_index = 0;
 	
@@ -280,7 +294,11 @@ class layout_model {
 			
 			if( $parent_id ){ // LET'S CHECK IF WE HAVE PARENTS
 				foreach( $id_menu as $key => $menu ){ // ONCE MORE LOOP THROUGH MENU
-					if( $menu->ID == $parent_id || $menu->menu_item_parent == $parent_id ){ // IF IS CHILD OF PARENT
+					if( $menu->ID == $parent_id ){
+						$menu->title = 'Overview';
+						$tertiary[] = $menu; // TOLD YOU WE'D SET IT LATER
+					}
+					else if( $menu->menu_item_parent == $parent_id ){ // IF IS CHILD OF PARENT
 						$tertiary[] = $menu; // TOLD YOU WE'D SET IT LATER
 					} // END IF
 				} // END FOREACH

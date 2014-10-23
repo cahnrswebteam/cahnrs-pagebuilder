@@ -28,6 +28,11 @@ class item_featured_image_model {
 			}
 			echo '</select>';
 		echo '</p>';
+		echo '<p>';
+		echo '<input style="display: none;" type="checkbox" name="'.$ipt_name.'[image_position]" value="0" checked="checked" />'; 
+		echo '<input type="checkbox" name="'.$ipt_name.'[image_position]" value="1" '.checked( 1 , $instance['image_position'] , false ) .' />';
+		echo '<label> As Background Image</label>';
+		echo '</p>';
 	}
 	
 	public function render_site( $post ){
@@ -43,9 +48,13 @@ class item_featured_image_model {
 		if( has_post_thumbnail( $post->ID ) ){
 			$size = ( 'email' == $post->post_type )? 'email-700' : 'large';
 			if( isset( $instance['image_size'] ) ) $size = $instance['image_size'];
-			echo '<div class="featured_image column-item">';
+			if( isset( $instance['image_position'] ) && $instance['image_position'] ){
+				$banner_img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $this->header_model->post->ID ), $size );
+        		$banner_img_url = $banner_img_url[0];
+				echo '<div class="featured-image column-item" style="background-image:url('.$banner_img_url.')"></div>';
+			} else {
 				echo get_the_post_thumbnail( $post->ID, $size );
-			echo '</div>';
+			}
 		}
 	}
 	

@@ -1,13 +1,16 @@
 <?php namespace cahnrswp\pagebuilder;
 
 class site_view {
-
+	public $layout_model;
 	public $meta_base = '_pagebuilder';
 	public $content_base = '_pagebuilder_editors';
+	public $args;
 
-	public function get_site_view( $post, $layout_obj, $layout_model ) {
-		$sets = get_option( '_pagebuilder_settings' );
+	public function get_site_view( $post, $layout_obj, $layout_model , $args = array() ) {
+		$this->layout_model = $layout_model;
+		$sets = $layout_model->settings;
 		$pos = ( isset( $sets['tertiary'] ) )? $sets['tertiary'] : 0;
+		$this->args = $args;
 		
 		
 		/************************************************
@@ -60,8 +63,7 @@ class site_view {
 	
     foreach( $layout_obj as $row ): ?>
         <?php 
-			if( $pos && ( ( 'row-100' == $row['id'] && 'header-before' == $pos ) || ( 'row-200' == $row['id'] && 'footer-before' == $pos )  ) )
-			 	$this->add_tertiary_nav( $post , $layout_obj , $layout_model );
+		
 			/** TO DO: CONSOLIDATE THE COLUMN COUNT AND COULUMN STYLES INTO ONE ARRAY - DB **/
 			$column_count = $layout_model->get_columns_by_layout( $row['layout'] ); // GET COLUMN COUNT FOR NOW
 			/*************************************
@@ -113,19 +115,12 @@ class site_view {
                         </div><?php 
 					endfor;?>
                 </div>
-        	<?php endif;?>
-            <?php 
-			if( $pos && ( ( 'row-100' == $row['id'] && 'header-after' == $pos ) || ( 'row-200' == $row['id'] && 'footer-after' == $pos )  ) )
-			 	$this->add_tertiary_nav( $post , $layout_obj , $layout_model );
-				?>
+        	<?php endif;?> 
         <?php endforeach;?>
         <?php
 	}
 	
-	private function add_tertiary_nav( $post , $layout_obj , $layout_model ){
-		/************************************************
-		** Add third level nav to layout **
-		*************************************************/
+	/*private function add_tertiary_nav( $post , $layout_obj , $layout_model ){
 		echo '<nav id="pagebuilder-tertiary-nav" role="navigation"><ul>';
 		if ( $layout_obj['tertiary_nav'] ) {
 			$is_active = false;
@@ -145,7 +140,7 @@ class site_view {
 				$i++;
 			}
 			
-			/*$i = 0;
+			$i = 0;
 			foreach ( $layout_obj['tertiary_nav'] as $menu_item ) {
 				if( $is_active ){
 					$active = (  $is_active == $menu_item->object_id  )? 'selected' : 'inactive';
@@ -157,17 +152,17 @@ class site_view {
 					echo '<div class="pagebuilder-tertiary-page tertiary-'.$i.' '.$active.'" >';
 					$post = get_post( $menu_item->object_id );
 					$lay_obj = $this->layout_model->get_layout_obj( $post );
-					$this->site_view->get_site_view( $post , $lay_obj , $layout_model );
-					echo '</div>';
+					$this->get_site_view( $post , $lay_obj , $layout_model, array( 'tertirary-nav' => false ) );
+					echo '</div>'; 
 				}
 				$i++;
-			}*/
+			}
 		}
 		echo '</ul></nav>';
 		//$this->get_third_level_nav( $post );
-	}
+	}*/
 	
-	public function get_email_view( $post , $layout_obj, $layout_model ){ 
+	public function get_email_view( $post , $layout_obj, $layout_model ){  
 		/************************************************
 		** START LAYOUT **
 		*************************************************/

@@ -46,10 +46,33 @@ class render_site_control {
 	}
 	
 	public function render_site( $content , $post ) {
-		$layout_obj = $this->layout_model->get_layout_obj( $post );
-		ob_start();
-		$this->site_view->get_site_view( $post , $layout_obj , $this->layout_model );
-		return ob_get_clean();
+		
+		$this->layout_model = new layout_model( $post ); // init layout model with post object
+		
+		
+		$layout_obj = $this->layout_model->get_layout_obj( $post ); // Legacy - get rid of this soon
+		
+		ob_start(); // It'll buff out
+		
+		/*************************************
+		** Start tertiary nav before **
+		*************************************/
+		if( $this->layout_model->tertiary_nav && 'before' ==  $this->layout_model->tertiary_position ){
+			$tertiary_nav = new tertiary_nav_view( $this , $this->layout_model ); // Get nav view
+			$tertiary_nav->get_nav( array() );
+		}
+
+		$this->site_view->get_site_view( $post , $layout_obj , $this->layout_model ); // Render View
+		
+		/*************************************
+		** Start tertiary nav after **
+		*************************************/
+		if( $this->layout_model->tertiary_nav && 'after' ==  $this->layout_model->tertiary_position ){
+			$tertiary_nav = new tertiary_nav_view( $this , $this->layout_model ); // Get nav view
+			$tertiary_nav->get_nav( array() );
+		}
+		
+		return ob_get_clean(); // Return content
 	}
 	
 	public function render_email( $content , $post ){
