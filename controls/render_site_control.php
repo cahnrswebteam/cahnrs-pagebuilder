@@ -16,15 +16,6 @@ class render_site_control {
 		 
 		 \add_action( 'wp_enqueue_scripts', array( $this , 'add_scripts' ) );
 		 
-		 \add_filter('template_include', array( $this , 'get_email_template' ), 1, 1);
-	}
-	
-	public function get_email_template( $template ){
-		global $post;
-		if( 'html_email' == $post->post_type ){
-			$template = DIR.'html-email-themes/html_email.php';
-		}
-		return $template;
 	}
 	
 	public function render_builder( $content ){

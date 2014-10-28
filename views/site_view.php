@@ -177,7 +177,7 @@ class site_view {
             </tr>
         </table>
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="<?php echo $email_width;?>" style="border-collapse: collapse;">
-        	<?php foreach( $layout_obj as $row ):?>
+        	<?php foreach( $layout_obj as $row_id => $row ):?>
             	<?php if( 'row-100' == $row['id'] ){
 					$row_style = ' style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;"';
 				} else if( 'row-200' == $row['id'] ) {
@@ -185,7 +185,8 @@ class site_view {
 				} else {
 					$row_style = 'style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;"';
 				}//if( isset( $row['columns'] ) ):?>
-                <tr >
+                <?php var_dump( $row );?>
+                <tr id="<?php echo $row['id'];?>">
                     <td <?php echo $row_style;?>>
                     <?php if( isset( $row['columns'] ) ):?>
                     	<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">

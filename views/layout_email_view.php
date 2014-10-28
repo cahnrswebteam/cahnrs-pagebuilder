@@ -16,26 +16,20 @@ class layout_email_view {
 		if( $this->pagebuilder_model->layout ){
 			foreach( $this->pagebuilder_model->layout as $rowid => $row ){
 				$bg_color = ( 'row-100' !== $rowid )? $row_bg : ''; 
-				$layout.= '<table bgcolor="'.$bg_color.'" style="border-collapse: collapse;" align="center" cellpadding="0" cellspacing="0" width="'.$layout_width.'"><tr>';
+				$layout.= '<table bgcolor="'.$bg_color.'" style="border-collapse: collapse;" align="center" cellpadding="0" cellspacing="0" width="'.$layout_width.'" id="'.$rowid.'" class="row" ><tr>';
 				for( $c = 1; $c <= $row['column_count']; $c++){
 					$col_width_ratio = $row['columns']['column-'.$c]['width'];
-					$col_width = $col_width_ratio * $layout_width;
 					$col_css = array();
 					if( 'row-100' != $rowid ){
-						$col_padding = 30 * $col_width_ratio;
-						$col_css[] = 'width:'.$col_width.'px;';
-						$col_css[] = 'padding-left: '.$col_padding.'px;';
-						$col_css[] = 'padding-right: '.$col_padding.'px;';
+						$col_css[] = 'width:'.( 100 * $col_width_ratio ).'%;';
 					}
-					$layout.= '<td width="'.$col_width.'" style="'.implode( ' ', $col_css ).'" valign="top"><br />&nbsp;<br />';
+					$layout.= '<td id="'.$rowid.'-column-'.$c.'" class="column" style="'.implode( ' ', $col_css ).'" valign="top"><br />&nbsp;<br />';
 					if( isset( $row['columns']['column-'.$c]['items'] ) ){
 						
 						foreach( $row['columns']['column-'.$c]['items'] as $itemKey => $item ){
-								$item_width = ( isset( $col_padding ) )? 
-									( $col_width - ( 2 * $col_padding ) ): 
-									$layout_width;
-								$args['before_widget'] = '<table width="'.$item_width.'" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width:'.$item_width.'px;">';
-								$args['after_widget'] = '<tr></table>';
+							$item_id = ( isset( $item->ID ) )? $item->ID : $item->id;
+								$args['before_widget'] = '<table cellpadding="0" cellspacing="0" style="border-collapse: collapse;" class="item '.$item_id.'">';
+								$args['after_widget'] = '</table>';
 								if( isset( $item->ID ) ){
 									ob_start();
 									\the_widget( $item->ID , $item->settings , $args );

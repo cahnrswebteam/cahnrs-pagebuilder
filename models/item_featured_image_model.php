@@ -46,7 +46,7 @@ class item_featured_image_model {
 	
 	public function item_render_site( $post , $instance ){
 		if( has_post_thumbnail( $post->ID ) ){
-			$size = ( 'email' == $post->post_type )? 'email-700' : 'large';
+			$size = 'large';
 			if( isset( $instance['image_size'] ) ) $size = $instance['image_size'];
 			if( isset( $instance['image_position'] ) && $instance['image_position'] ){
 				$banner_img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $this->header_model->post->ID ), $size );
@@ -62,8 +62,8 @@ class item_featured_image_model {
 		$post = $pagebuilder_model->post;
 		if( has_post_thumbnail( $post->ID ) ){
 			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
-			$image = '<img src="'.$image[0].'" width="700" style="width: 700px; height: auto; max-width: 100%; display: block;" />';
-			return '<tr><td>'.$image.'</td></tr>';
+			$image = '<img class="featured-image" src="'.$image[0].'" style="display: block;" />';
+			return '<tr><td style="width: 100%;">'.$image.'</td></tr>';
 		}
 		return '<tr><td></td></tr>';
 	}
