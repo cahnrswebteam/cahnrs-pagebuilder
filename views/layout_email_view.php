@@ -11,24 +11,19 @@ class layout_email_view {
 	
 	public function get_email(){
 		global $email_styles;
-		$layout_width = ( isset( $email_styles['layout-width'] ) )? $email_styles['layout-width'] : $this->pagebuilder_model->width;
-		$row_bg = ( isset( $email_styles['content-row']['bgcolor'] ) )? $email_styles['content-row']['bgcolor'] : '';
+		
 		if( $this->pagebuilder_model->layout ){
 			foreach( $this->pagebuilder_model->layout as $rowid => $row ){
-				$bg_color = ( 'row-100' !== $rowid )? $row_bg : ''; 
-				$layout.= '<table bgcolor="'.$bg_color.'" style="border-collapse: collapse;" align="center" cellpadding="0" cellspacing="0" width="'.$layout_width.'" id="'.$rowid.'" class="row" ><tr>';
+				//if( 'row-100' == $rowid && !isset( $row['columns']['column-1']['items'] ) ) continue;
+
+				$layout.= '<table id="'.$rowid.'" class="row '.$row['layout'].'" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" align="center" ><tr>';
 				for( $c = 1; $c <= $row['column_count']; $c++){
-					$col_width_ratio = $row['columns']['column-'.$c]['width'];
-					$col_css = array();
-					if( 'row-100' != $rowid ){
-						$col_css[] = 'width:'.( 100 * $col_width_ratio ).'%;';
-					}
-					$layout.= '<td id="'.$rowid.'-column-'.$c.'" class="column" style="'.implode( ' ', $col_css ).'" valign="top"><br />&nbsp;<br />';
+					$layout.= '<td id="'.$rowid.'-column-'.$c.'" class="column column-'.$c.'" valign="top"><br />&nbsp;<br />';
 					if( isset( $row['columns']['column-'.$c]['items'] ) ){
 						
 						foreach( $row['columns']['column-'.$c]['items'] as $itemKey => $item ){
 							$item_id = ( isset( $item->ID ) )? $item->ID : $item->id;
-								$args['before_widget'] = '<table cellpadding="0" cellspacing="0" style="border-collapse: collapse;" class="item '.$item_id.'">';
+								$args['before_widget'] = '<table cellpadding="0" cellspacing="0" class="item '.$item_id.'" border="0" style="border-collapse:collapse" align="center" >';
 								$args['after_widget'] = '</table>';
 								if( isset( $item->ID ) ){
 									ob_start();

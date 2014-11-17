@@ -175,6 +175,8 @@ class layout_model {
 	}
 	
 	public function get_default_layout_obj( $post ){
+		global $pagebuilder_layout_override;
+		if( isset( $pagebuilder_layout_override ) ) return $pagebuilder_layout_override;
 		$header = array(
 						'id' => 'row-100',
 						'name' => 'Header',
@@ -279,7 +281,12 @@ class layout_model {
 			
 			foreach( $id_menu as $key => $menu ){ // LOOP THROUGH MENU ITEMS - DB
 				if( $menu->object_id == $post->ID ){
-					if( !$menu->menu_item_parent ) return array(); // TOP LEVEL RETURN  - EMPTY ARRAY - DB
+					if( !$menu->menu_item_parent && $this->settings['tn-top'] ) {
+						$menu->title = 'Overview';
+						return array( $menu ); // TOP LEVEL RETURN  - EMPTY ARRAY - DB
+					} else if( !$menu->menu_item_parent ){
+						return array(); // TOP LEVEL RETURN  - EMPTY ARRAY - DB
+					}
 					$c_parent = $menu->menu_item_parent; // GET CURRENT PARENT
 					if( !$id_menu[$c_parent]->menu_item_parent ){ // IS SECOND LEVEL - DB
 						$parent_id = $menu->ID; // THIS IS THE PARENT OF NAV

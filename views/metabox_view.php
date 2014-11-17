@@ -195,7 +195,7 @@ class metabox_view {
                     <option value="pagbuilder-layout-fourths">Four</option>
                 </select></p>
                 <h4>Advanced Settings</h4>
-                <p>CSS Hook: <input class="input-css-hook" type="text"  value="" /></p> 
+                <p>CSS Hook: <input class="input-css-hook" type="text"  value="" /></p>  
                 </section>
                 <footer>
                     <a href="#" class="insert-row-action lb-close-action">Insert Row</a><br />
@@ -220,7 +220,16 @@ class metabox_view {
                     
                     <section class="form-content">
                     <label>Row Name</label><br />
-                    <input class="input-row-name" type="text" name="<?php echo $input_base;?>[name]" value="<?php echo $row['name'];?>" />
+                    <input class="input-row-name" type="text" name="<?php echo $input_base;?>[name]" value="<?php echo $row['name'];?>" /><br />
+                    <label>Display Title As:</label><br />
+                    <?php $r_tags = array( 'h2','h3','h4');?>
+                    <select name="<?php echo $input_base;?>[titletag]">
+                    <option value="">NA</option>
+                    	<?php foreach( $r_tags as $r_tag ):?>
+                        	<option value="<?php echo $r_tag;?>" <?php \selected( $row['titletag'] , $r_tag );?>><?php echo $r_tag;?></option>
+                        <?php endforeach;?>
+                    </select>
+                 
                     <input class="hidden-input" type="text" name="<?php echo $input_base;?>[id]" value="<?php echo $row['id'];?>" />
                     <input class="input-row-order hidden-input" type="text" name="<?php echo $input_base;?>[order]" value="<?php echo $row['order'];?>" />
                     <p>
@@ -234,8 +243,23 @@ class metabox_view {
                         <option value="pagbuilder-layout-thirds" <?php \selected( $row['layout'] , 'pagbuilder-layout-thirds' );?>>Three</option>
                         <option value="pagbuilder-layout-fourths" <?php \selected( $row['layout'] , 'pagbuilder-layout-fourths' );?>>Four</option>
                     </select></p>
+                    <p>
+                    <label>Row Category</label><br />
+                    <select class="input-column-layout" name="<?php echo $input_base;?>[category]">
+                    <?php $categories = get_categories(array( 'hide_empty' => 0 ) );?> 
+                    <option value="">Select</option>
+                    <?php foreach ( $categories as $category ) :?>
+                      <option value="<?php echo $category->slug;?>" <?php \selected( $row['category'] , $category->slug );?>>
+                      <?php echo $category->cat_name;?></option>
+                    <?php endforeach;?>
+                    </select></p>
                     <h4>Advanced Settings</h4>
-                    <p>CSS Hook: <input class="input-css-hook" type="text"   name="<?php echo $input_base;?>[class]" value="<?php echo $row['class'];?>" /></p> 
+                    <p>CSS Hook: <input class="input-css-hook" type="text"   name="<?php echo $input_base;?>[class]" value="<?php echo $row['class'];?>" /></p>
+                    <p>Background Image ID: <input type="text"   name="<?php echo $input_base;?>[bgimage]" value="<?php echo $row['bgimage'];?>" /></p>
+                    <p><input  style="display: none;" type="checkbox"   name="<?php echo $input_base;?>[bgscroll]" value="0"  checked="checked" /><input type="checkbox"   name="<?php echo $input_base;?>[bgscroll]" value="1" <?php checked( $row['bgscroll'] , 1 );?> /> Scroll Over Background<br />
+                    <input type="checkbox"   name="<?php echo $input_base;?>[bgfull]" value="1" checked=checked />
+                    <input style="display: none;" type="checkbox"   name="<?php echo $input_base;?>[bgfull]" <?php checked( $row['bgfull'] , 0 );?> value="0"  /> Full Width Background
+                    </p> 
                     </section>
                     <footer>
                         <a href="#" class="update-row-action lb-close-action">Done</a><br />

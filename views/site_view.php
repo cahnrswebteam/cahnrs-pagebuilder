@@ -62,6 +62,7 @@ class site_view {
 	
 	
     foreach( $layout_obj as $row ): ?>
+    
         <?php 
 		
 			/** TO DO: CONSOLIDATE THE COLUMN COUNT AND COULUMN STYLES INTO ONE ARRAY - DB **/
@@ -73,7 +74,20 @@ class site_view {
 				$row['layout'].'-empty' : $row['layout'];
         	if( isset( $row['columns'] ) ):?>
 				<?php $empty_aside = ( isset( $row['columns']['column-2'] ))? '' : 'empty-aside'; ?>
-                <div id="<?php echo $row['id'];?>" class="pagebuilder-row <?php echo $row['id'].' '.$row['layout'].' '.$empty_aside.' '.$row['class'];?>" >
+                <div id="<?php echo $row['id'];?>" class="pagebuilder-row <?php echo $row['id'].' '.$row['layout'].' '.$empty_aside.' '.$row['class'];?>">
+                	<?php if( isset( $row['bgimage'] ) && $row['bgimage'] ):?>
+                    	<?php $image = wp_get_attachment_image_src( $row['bgimage'], 'full' );?> 
+                    	<div class="pagebuilder-row-background<?php if( isset( $row['bgfull'] ) && $row['bgfull'] ) echo ' unbound recto verso';?>" style="background-image: url(<?php echo $image[0];?>);">
+                        </div>
+                        
+                    <?php endif;?>
+                    <?php if( isset( $row['category'] )) echo '<a name="'.$row['category'].'" ></a>';?>
+                    <?php if( isset( $row['titletag'] ) && $row['titletag'] ):
+						$id = ( isset( $row['category'] ) && $row['category'] )? 'section-'.$row['category'] : '';?>
+                    	<?php echo '<'. $row['titletag'].' id="'.$id.'">'.$row['name'].'</'. $row['titletag'].'>';?>
+                    <?php endif;?>
+                
+       
                     <?php for( $i = 1; $i <= $column_count; $i++ ):
 						//if( 'pagbuilder-layout-aside' == $row['layout'] ){
 							///if( 1 == $i ) $c = 2;
@@ -166,8 +180,8 @@ class site_view {
 		/************************************************
 		** START LAYOUT **
 		*************************************************/
-		$email_width = 700;?>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="<?php echo $email_width;?>" style="border-collapse: collapse;">
+		?>
+        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
             <tr>
                 <td>
                 	<center>&nbsp;<br />
@@ -176,16 +190,8 @@ class site_view {
                 </td>
             </tr>
         </table>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="<?php echo $email_width;?>" style="border-collapse: collapse;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
         	<?php foreach( $layout_obj as $row_id => $row ):?>
-            	<?php if( 'row-100' == $row['id'] ){
-					$row_style = ' style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;"';
-				} else if( 'row-200' == $row['id'] ) {
-					$row_style = 'bgcolor="#dddddd" style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;"';
-				} else {
-					$row_style = 'style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;"';
-				}//if( isset( $row['columns'] ) ):?>
-                <?php var_dump( $row );?>
                 <tr id="<?php echo $row['id'];?>">
                     <td <?php echo $row_style;?>>
                     <?php if( isset( $row['columns'] ) ):?>
