@@ -14,16 +14,16 @@ class layout_email_view {
 		
 		if( $this->pagebuilder_model->layout ){
 			foreach( $this->pagebuilder_model->layout as $rowid => $row ){
-				//if( 'row-100' == $rowid && !isset( $row['columns']['column-1']['items'] ) ) continue;
+				if( 'row-100' == $rowid && !isset( $row['columns']['column-1']['items'] ) ) continue;
 
 				$layout.= '<table id="'.$rowid.'" class="row '.$row['layout'].'" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" align="center" ><tr>';
 				for( $c = 1; $c <= $row['column_count']; $c++){
-					$layout.= '<td id="'.$rowid.'-column-'.$c.'" class="column column-'.$c.'" valign="top"><br />&nbsp;<br />';
+					$layout.= '<td id="'.$rowid.'-column-'.$c.'" class="column column-'.$c.'" valign="top">';
 					if( isset( $row['columns']['column-'.$c]['items'] ) ){
 						
 						foreach( $row['columns']['column-'.$c]['items'] as $itemKey => $item ){
 							$item_id = ( isset( $item->ID ) )? $item->ID : $item->id;
-								$args['before_widget'] = '<table cellpadding="0" cellspacing="0" class="item '.$item_id.'" border="0" style="border-collapse:collapse" align="center" >';
+								$args['before_widget'] = '<table cellpadding="0" cellspacing="0" class="item '.$item_id.'" border="0" style="border-collapse:collapse" >';
 								$args['after_widget'] = '</table>';
 								if( isset( $item->ID ) ){
 									ob_start();

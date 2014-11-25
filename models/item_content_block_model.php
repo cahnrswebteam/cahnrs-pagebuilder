@@ -53,7 +53,7 @@ class item_content_block_model {
 				}
 			}
 		}
-		echo \apply_filters('the_content', $content ); // APPLY FILTERS AND ECHO CONTENT
+		echo \apply_filters('pagebuilder_content', $content ); // APPLY FILTERS AND ECHO CONTENT
 	}
 	
 	public function render_html_email( $pagebuilder_model ){
@@ -76,7 +76,7 @@ class item_content_block_model {
 				}
 			}
 		}
-		return '<tr><td>'.\apply_filters('the_content', $content ).'</td></tr>';
+		return '<tr><td>'.\apply_filters('pagebuilder_content', $content ).'</td></tr>';
 	}
 	
 };?>
