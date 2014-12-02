@@ -396,15 +396,15 @@ class metabox_view {
             <nav>
             	<a href="#" class="add-item-pop active" data-type="popular-items">
                 	Popular Items
-                </a><?php if( 'email' != $post->post_type ):?><a href="#" class="add-item-widgets" data-type="widget-items">
+                </a><a href="#" class="add-item-widgets" data-type="widget-items">
                 	All Widgets
                 </a><a href="#" class="add-item-sidebar" data-type="sidebar-items">
                 	Sidebars & Widget Areas
-                </a><?php endif;?>
+                </a>
             </nav>
             <?php $this->render_add_item_popular( $post );?>
-            <?php if( 'email' != $post->post_type ) $this->render_add_item_widgets( $post );?>
-   			<?php if( 'email' != $post->post_type ) $this->render_add_item_sidebar( $post );?>
+            <?php $this->render_add_item_widgets( $post );?>
+   			<?php $this->render_add_item_sidebar( $post );?>
             <footer>
             <a href="#" class="lb-close-action">Cancel</a><a href="#" class="insert-item-action">Insert Item</a>
             </footer>
@@ -439,13 +439,11 @@ class metabox_view {
                 </div>
                 <!-- START WIDGETS - POPULAR -->
                 <?php $pop_widg = $this->layout_model->get_popular_widgets();?>
-                
                 <div class="sub-section">
                 	<header>
                     	Frequently Used Items
                     </header>
                     <div class="sub-section-content">
-                    <?php if( 'email' != $post->post_type ):?>
 					<?php if ( !empty( $GLOBALS['wp_widget_factory'] ) ):?>
                       <?php $widgets = $GLOBALS['wp_widget_factory']->widgets;?>
                       <?php foreach( $widgets as $widget_key => $widget ):?>
@@ -458,10 +456,9 @@ class metabox_view {
                         </div>
                         <?php endif;?>
                     		<?php endforeach;?>
-                		<?php endif;?><?php endif;?>
+                		<?php endif;?>
                     	<div style="clear: both"></div>
                     </div>
-                    
                     <footer>
                     </footer>
                 </div>
