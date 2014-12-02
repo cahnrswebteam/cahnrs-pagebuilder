@@ -350,7 +350,7 @@ class site_view {
 	}*/
 	
 	
-	private function get_title( $item_instance ){
+	public function get_title( $item_instance ){
 		if( $item_instance['settings']['title_tag'] && $item_instance['settings']['title'] ){
 			$tag = $item_instance['settings']['title_tag'];
 			$title = $item_instance['settings']['title'];
@@ -360,7 +360,7 @@ class site_view {
 		}
 	}
 	
-	private function get_item_wrapper( $tag , $position = 'after' , $item = array(), $item_key = '' ){
+	public function get_item_wrapper( $tag , $position = 'after' , $item = array(), $item_key = '' ){
 		switch( $position ){
 			case 'before':
 				$force_first = ( isset( $item['settings']['force_mobile_first'] ) && $item['settings']['force_mobile_first'] )? ' pagebuilder-force-first' : '';
