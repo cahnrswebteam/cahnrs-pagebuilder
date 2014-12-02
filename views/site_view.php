@@ -102,7 +102,9 @@ class site_view {
                         <?php if( $column['items']){
                         	foreach( $column['items'] as $item_key => $item ){
 								$is_content = ( isset( $item['settings']['is_content'] ) )? $item['settings']['is_content'] : false;
-								if( $is_content || 'page_content' == $item['id'] || 'content_block' == $item['id'] ){
+								if( 'insert_site_section' == $item['id'] ) {
+									$tag = false;
+								} else if( $is_content || 'page_content' == $item['id'] || 'content_block' == $item['id'] ){
 									$tag = 'div';
 								} else {
 									$tag = 'aside';
@@ -361,6 +363,7 @@ class site_view {
 	}
 	
 	public function get_item_wrapper( $tag , $position = 'after' , $item = array(), $item_key = '' ){
+		if ( !$tag ) return '';
 		switch( $position ){
 			case 'before':
 				$force_first = ( isset( $item['settings']['force_mobile_first'] ) && $item['settings']['force_mobile_first'] )? ' pagebuilder-force-first' : '';

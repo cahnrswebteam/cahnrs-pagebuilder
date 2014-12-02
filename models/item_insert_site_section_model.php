@@ -87,7 +87,9 @@ class item_insert_site_section_model {
 		foreach( $render_items as $item_key => $item ) {
 			
 			$is_content = ( isset( $item['settings']['is_content'] ) )? $item['settings']['is_content'] : false;
-			if( $is_content || 'page_content' == $item['id'] || 'content_block' == $item['id'] ){
+			if( 'insert_site_section' == $item['id'] ) {
+				$tag = false;
+			} else if( $is_content || 'page_content' == $item['id'] || 'content_block' == $item['id'] ){
 				$tag = 'div';
 			} else {
 				$tag = 'aside';
