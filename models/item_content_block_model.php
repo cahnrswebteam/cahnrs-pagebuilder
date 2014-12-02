@@ -76,6 +76,8 @@ class item_content_block_model {
 				}
 			}
 		}
+		
+		$content = wpautop( $content , true );
 		return '<tr><td>'.\apply_filters('pagebuilder_content', $content ).'</td></tr>';
 	}
 	
