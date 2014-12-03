@@ -56,7 +56,7 @@ class item_content_block_model {
 		echo \apply_filters('pagebuilder_content', $content ); // APPLY FILTERS AND ECHO CONTENT
 	}
 	
-	public function render_html_email( $pagebuilder_model ){
+	public function render_html_email( $pagebuilder_model  ){
 		$post = $pagebuilder_model->post;
 		$instance = $this->instance;
 		$page_content = \get_post_meta( $post->ID , '_pagebuilder_editor', true ); // GET PAGEBUILDER EDITORS META

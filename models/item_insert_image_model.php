@@ -19,17 +19,21 @@ class item_insert_image_model {
 	}
 	
 	public function item_render_site( $post , $instance ){
-		/*if( has_post_thumbnail( $post->ID ) ){
-			$size = 'large';
-			if( isset( $instance['image_size'] ) ) $size = $instance['image_size'];
-			if( isset( $instance['image_position'] ) && $instance['image_position'] ){
-				$banner_img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $this->header_model->post->ID ), $size );
-        		$banner_img_url = $banner_img_url[0];
-				echo '<div class="featured-image column-item" style="background-image:url('.$banner_img_url.')"></div>';
-			} else {
-				echo get_the_post_thumbnail( $post->ID, $size );
-			}
-		}*/
+		
+		if( !isset( $instance['image-size'] ) || !$instance['image-size'] ) {
+			$instance['image-size'] = 'large';
+		} 
+		
+		if( isset( $instance['image-id'] ) ) {
+			
+			$img_url = wp_get_attachment_image_src( $instance['image-id'], $instance['image-size'] );
+			
+        	$img_url = $img_url[0];
+			
+			$img = '<img src="' . $img_url . '" />';
+			
+		} // end if
+
 	}
 	
 	public function render_html_email( $pagebuilder_model ){
@@ -40,6 +44,27 @@ class item_insert_image_model {
 			return '<tr><td style="width: 100%;">'.$image.'</td></tr>';
 		}
 		return '<tr><td></td></tr>';*/
+		var_dump( $this->instance );
+		
+		if( !isset( $this->instance['image-size'] ) || !$this->instance['image-size'] ) {
+			$this->instance['image-size'] = 'large';
+		} 
+		
+		if( isset( $this->instance['image-id'] ) ) {
+			
+			$img_url = wp_get_attachment_image_src( $this->instance['image-id'], $this->instance['image-size'] );
+			
+        	$img_url = $img_url[0];
+			
+			$image = '<img class="insert-image" src="'.$img_url.'" style="display: block;" />';
+			
+			return '<tr><td style="width: 100%;">'.$image.'</td></tr>';
+			
+		} else { // end if
+		
+			return '<tr><td></td></tr>';
+			
+		}
 	}
 	
 };?>
