@@ -23,7 +23,8 @@ class layout_model {
 		'content_block',
 		'featured_image',
 		'page_title',
-		'subtitle' 
+		'subtitle',
+		'insert_image',
 		 );
 		 
 	public $registered_sidebars = array(  
