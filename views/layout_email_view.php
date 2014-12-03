@@ -16,7 +16,7 @@ class layout_email_view {
 			foreach( $this->pagebuilder_model->layout as $rowid => $row ){
 				if( 'row-100' == $rowid && !isset( $row['columns']['column-1']['items'] ) ) continue;
 
-				$layout.= '<table id="'.$rowid.'" class="row '.$row['layout'].'" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" align="center" ><tr>';
+				$layout.= '<table id="'.$rowid.'" class="row '.$row['layout'].' ' . $row['class'] . '" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" align="center" ><tr>';
 				for( $c = 1; $c <= $row['column_count']; $c++){
 					$layout.= '<td id="'.$rowid.'-column-'.$c.'" class="column column-'.$c.'" valign="top">';
 					if( isset( $row['columns']['column-'.$c]['items'] ) ){
