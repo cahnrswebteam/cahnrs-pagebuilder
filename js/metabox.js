@@ -73,6 +73,16 @@ var pagebuilder = function(){
 			});
 	}
 	
+	s.pb_accordion = function(){
+		
+		jQuery('body').on( 'click' , '.pb-editor-form-accordion > li > header' , function(){
+			var cur = jQuery( this ).parent('li');
+			cur.children('ul').slideDown('medium');
+			cur.siblings().children('ul').slideUp('medium');
+		}); // end on click .pb-editor-form-accordion > li > header
+		
+	}
+	
 	s.bld_exst_itms = function(){
 		var exst = jQuery('.layout-row .pagebuilder-item');
 		exst.each( function(){
@@ -124,7 +134,12 @@ var pagebuilder = function(){
 			var l = encodeURIComponent( sf.find('.input-column-layout').val() );
 			var c = encodeURIComponent( sf.find('.input-css-hook').val() );
 			var n = encodeURIComponent( sf.find('.input-row-name').val() );
-			var query = homeURL + '?cahnrs-pagebuilder=row&l='+l+'&i='+rs+'&n='+n+'&c='+c;
+			var url = encodeURIComponent( sf.find('.input-row-url').val() );
+			var import_title = 0;
+			if( sf.find('.input-row-import-title:checked').length > 0 ) {
+				import_title = 1;
+			} 
+			var query = homeURL + '?cahnrs-pagebuilder=row&l='+l+'&i='+rs+'&n='+n+'&c='+c+'&url='+url+'&import-title='+import_title;
 			jQuery.post( query , function( data ) {
 					s.cur_add_row.before( data );
 					//s.up_row_ord();
@@ -293,4 +308,5 @@ var pagebuilder = function(){
 	
 	s.b_e();
 	s.bld_exst_itms();
+	s.pb_accordion();
 }

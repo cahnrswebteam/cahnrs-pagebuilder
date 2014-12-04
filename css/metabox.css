@@ -640,6 +640,47 @@ border-top: 1px solid #ccc;
 	margin: 5px 0;
 }
 
+/** New Features **/
+.pb-editor-form-accordion,
+.pb-editor-form-accordion ul {
+	margin: 0;
+	list-style-type: none;
+}
+
+.pb-editor-form-accordion {
+	padding: 0;
+}
+
+.pb-editor-form-accordion > li {
+	margin: 0;
+	padding: 0;
+}
+
+.pb-editor-form-accordion > li > header {
+	padding: 1rem;
+	font-weight: bold;
+	border: 1px solid #ccc;
+	background: #eee;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.pb-editor-form-accordion ul {
+	padding: 1rem 0;
+	border: 1px solid #ccc;
+	background: #fff;
+	display: none;
+}
+
+.pb-editor-form-accordion > li:first-child ul {
+	display: block;
+}
+
+.pb-editor-form-accordion ul > li {
+	margin: 0 1rem;
+}
+
+
 /** BASE 64 IMAGES **/
 
 #pagebuilder-layout-editor .layout-column {

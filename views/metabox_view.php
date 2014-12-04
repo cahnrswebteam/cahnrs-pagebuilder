@@ -171,112 +171,19 @@ class metabox_view {
 		?>
         <?php if( 'row-100' !== $row['id'] ):?>
         	<a href="#" class="add-row-action"></a>
-            <div class="pagebuilder-settings-form add-row-settings pagebuilder-lightbox-window">
-            
-            
-            <div class="settings-wrapper">
-                <header>
-                    Add New Row<br />
-                    <span>Row Options</span>
-                </header>
-                
-                <section class="form-content">
-                <label>Row Name</label><br />
-                <input class="input-row-name" type="text"  value="" />
-                <p>
-                <label>Columns</label><br />
-                <select class="input-column-layout" >
-                	<option value="pagbuilder-layout-full">One</option>
-                    <option value="pagbuilder-layout-aside">Two - Sidebar Right</option>
-                    <option value="pagbuilder-layout-half">Two - Half</option>
-                    <option value="pagbuilder-layout-third-right">Two - 1/3 Right</option>
-                    <option value="pagbuilder-layout-third-left">Two - 1/3 Left</option>
-                    <option value="pagbuilder-layout-thirds">Three</option>
-                    <option value="pagbuilder-layout-fourths">Four</option>
-                </select></p>
-                <h4>Advanced Settings</h4>
-                <p>CSS Hook: <input class="input-css-hook" type="text"  value="" /></p>  
-                </section>
-                <footer>
-                    <a href="#" class="insert-row-action lb-close-action">Insert Row</a><br />
-                    <a href="#" class="lb-cancel-action lb-close-action">Cancel</a>
-                </footer>
-            </div>
-            
-            
-            
-            </div>
+            <?php include DIR.'/inc/editor-add-row-form.php'; ?>
         <?php endif;?>
         <div class="layout-row <?php echo $layout;?>" data-id="<?php echo $row['id'];?>">
             <header class="row-header">
                 <a href="#" class="row-settings-action title-text"><?php echo $row['name'];?></a>
-                <div class="pagebuilder-settings-form add-row-settings pagebuilder-lightbox-window">
-                
-                
-                <div class="settings-wrapper">
-                    <header>
-                        Row Settings
-                    </header>
-                    
-                    <section class="form-content">
-                    <label>Row Name</label><br />
-                    <input class="input-row-name" type="text" name="<?php echo $input_base;?>[name]" value="<?php echo $row['name'];?>" /><br />
-                    <label>Display Title As:</label><br />
-                    <?php $r_tags = array( 'h2','h3','h4');?>
-                    <select name="<?php echo $input_base;?>[titletag]">
-                    <option value="">NA</option>
-                    	<?php foreach( $r_tags as $r_tag ):?>
-                        	<option value="<?php echo $r_tag;?>" <?php \selected( $row['titletag'] , $r_tag );?>><?php echo $r_tag;?></option>
-                        <?php endforeach;?>
-                    </select>
-                 
-                    <input class="hidden-input" type="text" name="<?php echo $input_base;?>[id]" value="<?php echo $row['id'];?>" />
-                    <input class="input-row-order hidden-input" type="text" name="<?php echo $input_base;?>[order]" value="<?php echo $row['order'];?>" />
-                    <p>
-                    <label>Columns</label><br />
-                    <select class="input-column-layout" name="<?php echo $input_base;?>[layout]">
-                        <option value="pagbuilder-layout-full" <?php \selected( $row['layout'] , 'pagbuilder-layout-full' );?>>One</option>
-                        <option value="pagbuilder-layout-aside" <?php \selected( $row['layout'] , 'pagbuilder-layout-aside' );?>>Two - Sidebar Right</option>
-                        <option value="pagbuilder-layout-half" <?php \selected( $row['layout'] , 'pagbuilder-layout-half' );?>>Two - Half</option>
-                        <option value="pagbuilder-layout-third-right" <?php \selected( $row['layout'] , 'pagbuilder-layout-third-right' );?>>Two - 1/3 Right</option>
-                        <option value="pagbuilder-layout-third-left" <?php \selected( $row['layout'] , 'pagbuilder-layout-third-left' );?>>Two - 1/3 Left</option>
-                        <option value="pagbuilder-layout-thirds" <?php \selected( $row['layout'] , 'pagbuilder-layout-thirds' );?>>Three</option>
-                        <option value="pagbuilder-layout-fourths" <?php \selected( $row['layout'] , 'pagbuilder-layout-fourths' );?>>Four</option>
-                    </select></p>
-                    <p>
-                    <label>Row Category</label><br />
-                    <select class="input-column-layout" name="<?php echo $input_base;?>[category]">
-                    <?php $categories = get_categories(array( 'hide_empty' => 0 ) );?> 
-                    <option value="">Select</option>
-                    <?php foreach ( $categories as $category ) :?>
-                      <option value="<?php echo $category->slug;?>" <?php \selected( $row['category'] , $category->slug );?>>
-                      <?php echo $category->cat_name;?></option>
-                    <?php endforeach;?>
-                    </select></p>
-                    <h4>Advanced Settings</h4>
-                    <p>CSS Hook: <input class="input-css-hook" type="text"   name="<?php echo $input_base;?>[class]" value="<?php echo $row['class'];?>" /></p>
-                    <p>Background Image ID: <input type="text"   name="<?php echo $input_base;?>[bgimage]" value="<?php echo $row['bgimage'];?>" /></p>
-                    <p><input  style="display: none;" type="checkbox"   name="<?php echo $input_base;?>[bgscroll]" value="0"  checked="checked" /><input type="checkbox"   name="<?php echo $input_base;?>[bgscroll]" value="1" <?php checked( $row['bgscroll'] , 1 );?> /> Scroll Over Background<br />
-                    <input type="checkbox"   name="<?php echo $input_base;?>[bgfull]" value="1" checked=checked />
-                    <input style="display: none;" type="checkbox"   name="<?php echo $input_base;?>[bgfull]" <?php checked( $row['bgfull'] , 0 );?> value="0"  /> Full Width Background
-                    </p> 
-                    </section>
-                    <footer>
-                        <a href="#" class="update-row-action lb-close-action">Done</a><br />
-                        <?php if( 'row-100' != $row['id'] && 'row-200' != $row['id'] ):?>
-                        <a href="#" class="delete-row-action lb-close-action">Delete Row</a>
-                        <?php endif;?>
-                    </footer>
-                </div>
-                
-                
-                
-                </div>
+                <?php include DIR.'/inc/inc-editor-row-settings-form.php'; ?>
             </header>
+            <?php if( !isset( $row['url'] ) || !$row['url'] ):?>
             <div class="column-wrapper">
             	<?php $this->render_layout_editor_columns( $post , $row, $layout_obj );?>
                 <div style="clear: both;"></div>
             </div>
+            <?php endif; // end if $row['url'] ?>
         </div>
 		<?php 
 	}

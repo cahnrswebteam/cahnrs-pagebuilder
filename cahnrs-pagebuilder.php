@@ -10,7 +10,10 @@
 * License: GPL2
 */
 
-class cahnrs_pagebuilder{
+class Init_CAHNRS_Pagebuilder{
+	
+	private $render_site;
+	
 	
 	public function __construct(){
 		$this->init_autoload(); // ACTIVATE CUSTOM AUTOLOADER FOR CLASSES
@@ -20,6 +23,27 @@ class cahnrs_pagebuilder{
 		//$init_layout_tab->init();
 		
 		//$init_save = new save_control();
+	}
+	/**
+		* @Desc Builds content layout for local post/page
+		*
+		* @param $post ( object | int ) WP post object or post id
+		*
+		* @return Formatted HTML layout for the post  
+	*/
+	
+	public function render_local( $post ){
+		
+		if( !is_object( $post ) ) { 
+			
+			$post = get_post( $post );
+			
+		}
+		
+		$layout = $this->render_site->render_site( $post );
+		
+		return $layout;
+		
 	}
 	
 	public function init(){
@@ -37,8 +61,8 @@ class cahnrs_pagebuilder{
 		$manage_items = new item_control();
 		$manage_items->init();
 		
-		$render_site = new render_site_control();
-		$render_site->init();
+		$this->render_site = new render_site_control();
+		$this->render_site->init();
 	}
 	
 	public function init_admin_post(){
@@ -58,6 +82,6 @@ class cahnrs_pagebuilder{
 	
 }
 
-$cahnrs_pabebuilder = new cahnrs_pagebuilder();
+$cahnrs_pabebuilder = new Init_CAHNRS_Pagebuilder();
 $cahnrs_pabebuilder->init();
 ?>

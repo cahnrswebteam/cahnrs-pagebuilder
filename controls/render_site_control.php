@@ -28,7 +28,7 @@ class render_site_control {
 			if( 'html_email' == $post->post_type ){ 
 				$content = $this->render_email( $content , $post );
 			} else {
-				$content = $this->render_site( $content , $post );
+				$content = $this->render_site( $post );
 			}
 			$in_loop = false;
 			return $content;
@@ -36,7 +36,7 @@ class render_site_control {
 		return '<div class="pagebuilder-item">'.$content.'</div>';
 	}
 	
-	public function render_site( $content , $post ) {
+	public function render_site( $post ) {
 		
 		$this->layout_model = new layout_model( $post ); // init layout model with post object
 		
@@ -63,7 +63,8 @@ class render_site_control {
 			$tertiary_nav->get_nav( array() );
 		}
 		
-		return ob_get_clean(); // Return content
+		return apply_filters( 'cahnrs_pagebuilder_render_site', ob_get_clean() , $layout_obj , $post );
+		
 	}
 	
 	public function render_email( $content , $post ){
