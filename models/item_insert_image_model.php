@@ -37,14 +37,6 @@ class item_insert_image_model {
 	}
 	
 	public function render_html_email( $pagebuilder_model ){
-		/*$post = $pagebuilder_model->post;
-		if( has_post_thumbnail( $post->ID ) ){
-			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
-			$image = '<img class="featured-image" src="'.$image[0].'" style="display: block;" />';
-			return '<tr><td style="width: 100%;">'.$image.'</td></tr>';
-		}
-		return '<tr><td></td></tr>';*/
-		var_dump( $this->instance );
 		
 		if( !isset( $this->instance['image-size'] ) || !$this->instance['image-size'] ) {
 			$this->instance['image-size'] = 'large';
@@ -56,7 +48,7 @@ class item_insert_image_model {
 			
         	$img_url = $img_url[0];
 			
-			$image = '<img class="insert-image" src="'.$img_url.'" style="display: block;" />';
+			$image = '<img class="insert-image" src="'.$img_url.'" width="100%" style="display: block;" />';
 			
 			return '<tr><td style="width: 100%;">'.$image.'</td></tr>';
 			
