@@ -32,6 +32,21 @@ class Init_CAHNRS_Pagebuilder{
 		* @return Formatted HTML layout for the post  
 	*/
 	
+	public function pagebuilder_content_filter(){
+		if ( !has_filter( 'pagebuilder_content', 'wptexturize' ) ) {
+            add_filter( 'pagebuilder_content', 'wptexturize'        );
+            add_filter( 'pagebuilder_content', 'convert_smilies'    );
+            add_filter( 'pagebuilder_content', 'convert_chars'      );
+            add_filter( 'pagebuilder_content', 'wpautop'            );
+            add_filter( 'pagebuilder_content', 'shortcode_unautop'  );
+            add_filter( 'pagebuilder_content', 'prepend_attachment' );
+            $vidembed = new \WP_Embed();
+            add_filter( 'pagebuilder_content', array( &$vidembed, 'run_shortcode'), 8 );
+            add_filter( 'pagebuilder_content', array( &$vidembed, 'autoembed'), 8 );
+            add_filter( 'pagebuilder_content', 'do_shortcode', 11);
+        } //end has_filter
+	}
+	
 	public function render_local( $post ){
 		
 		if( !is_object( $post ) ) { 
