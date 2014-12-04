@@ -39,17 +39,8 @@
 								$args = array();
 								$args['before_widget'] = $this->get_item_wrapper( $tag , 'before' , $item, $item_key );
 								$args['after_widget'] = $this->get_item_wrapper( $tag );
-								switch( $item['type'] ){
-									case 'native' :
-										echo $args['before_widget'];
-										$item_obj = $layout_model->get_item_object( $item );
-										$item_obj->item_render_site( $post , $item );
-										echo $args['after_widget'];
-										break;
-									case 'widget' :
-										\the_widget( $item['id'] , $item['settings'], $args );
-										break;
-								};
+								
+								include DIR . '/inc/inc-public-site-item.php';
 							}
                         };?>
                         </div><?php 

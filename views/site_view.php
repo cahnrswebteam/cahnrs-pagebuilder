@@ -68,17 +68,6 @@ class site_view {
 			
 			global $cahnrs_pabebuilder;
 			
-			/*$categories = get_the_category( $row['urlid'] );
-			
-			$category_slugs = array();
-			
-			foreach( $categories as $category ){
-				
-				
-				$category_slugs[] = $category->slug;
-				
-			}*/
-			
 			do_action( 'cahnrs_pagebuilder_before_render_import' , $row , $row['urlid'] );
 			
 			if( isset( $row['import_title'] ) && $row['import_title'] ) {
@@ -91,6 +80,23 @@ class site_view {
 			
 			echo apply_filters( 'cahnrs_pagebuilder_render_import', $layout , $row );
 			
+			
+		} else if( isset( $row['class'] ) && strpos( $row['class'] , 'boundless' ) !== false ){ // render outside of row
+			
+			if( isset( $row['columns']['column-1']['items'] ) ){
+				
+				$items = $row['columns']['column-1']['items'];
+				
+				$args['before_widget'] = '';
+				
+				$args['after_widget'] = '';
+				
+				foreach( $items as $item_key => $item ){
+					
+					include DIR . '/inc/inc-public-site-item.php';
+					
+				}
+			}
 			
 		} else if( isset( $row['columns'] ) ) {
 		
