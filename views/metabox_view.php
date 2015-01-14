@@ -25,11 +25,11 @@ class metabox_view {
 		if( 2 > count($the_content ) ){ // IF NO PRIMARY CONTENT WRITTEN IN THE CONTENT
 			$legacy_content = \get_post_meta( $post->ID , '_cahnrs_page_content', true );  // GET PAGEBUILDER EDITORS META
 			$primary_content = ( $legacy_content )? $legacy_content : $post->post_content;
-			if( strpos( $post->post_content, '<!--more-->' ) ){
-				$more_content = explode( '<!--more-->' , $post->post_content );
-				$primary_content = $more_content[0];
-				unset( $more_content[0] );
-			}
+			//if( strpos( $post->post_content, '<!--more-->' ) ){
+				//$more_content = explode( '<!--more-->' , $post->post_content );
+				//$primary_content = $more_content[0];
+				//unset( $more_content[0] );
+			//}
 		} else {
 			$primary_content = $the_content[1];
 		}

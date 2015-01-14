@@ -27,10 +27,10 @@ class item_page_content_model {
 		} else { // CHECK LEGACY CONTENT FIELD
 			$legacy_content = \get_post_meta( $post->ID , '_cahnrs_page_content', true );  // GET PAGEBUILDER EDITORS META
 			$content = ( $legacy_content )? $legacy_content : $post->post_content; // USE LEGACY OR POST CONTENT
-			if( strpos( $post->post_content, '<!--more-->' ) ){
-					$more_content = explode( '<!--more-->' , $post->post_content );
-					$content = $more_content[0];
-			}
+			//if( strpos( $post->post_content, '<!--more-->' ) ){
+					//$more_content = explode( '<!--more-->' , $post->post_content );
+					//$content = $more_content[0];
+			//}
 		}
 		//echo \apply_filters('pagebuilder_the_content', $content ); // APPLY FILTERS AND ECHO 
 		echo \apply_filters('the_content', $content );
