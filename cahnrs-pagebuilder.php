@@ -16,29 +16,11 @@ class cahnrs_pagebuilder{
 		$this->init_autoload(); // ACTIVATE CUSTOM AUTOLOADER FOR CLASSES
 		$this->define_constants(); // YEP, THAT'S WHAT IT DOES
 		
-		add_action( 'init', array( $this, 'pagebuilder_content_filter' ), 1 );
-		
 		//$init_layout_tab = new layout_control();
 		//$init_layout_tab->init();
 		
 		//$init_save = new save_control();
 	}
-	
-	public function pagebuilder_content_filter(){
-		if ( !has_filter( 'pagebuilder_content', 'wptexturize' ) ) {
-            add_filter( 'pagebuilder_content', 'wptexturize'        );
-            add_filter( 'pagebuilder_content', 'convert_smilies'    );
-            add_filter( 'pagebuilder_content', 'convert_chars'      );
-            add_filter( 'pagebuilder_content', 'wpautop'            );
-            add_filter( 'pagebuilder_content', 'shortcode_unautop'  );
-            add_filter( 'pagebuilder_content', 'prepend_attachment' );
-            $vidembed = new \WP_Embed();
-            add_filter( 'pagebuilder_content', array( &$vidembed, 'run_shortcode'), 8 );
-            add_filter( 'pagebuilder_content', array( &$vidembed, 'autoembed'), 8 );
-            add_filter( 'pagebuilder_content', 'do_shortcode', 11);
-        } //end has_filter
-	}
-	
 	
 	public function init(){
 		if ( is_admin() ) { 
@@ -70,7 +52,7 @@ class cahnrs_pagebuilder{
 	}
 	
 	private function define_constants(){
-		define( __NAMESPACE__.'\URL' , plugins_url( 'cahnrs-pagebuilder' ) ); // PLUGIN BASE URL
+		define( __NAMESPACE__.'\URL' , plugins_url( 'cahnrs-pagebuilder-branch' ) ); // PLUGIN BASE URL
 		define( __NAMESPACE__.'\DIR' , plugin_dir_path( __FILE__ ) ); // DIRECTORY PATH
 	}
 	

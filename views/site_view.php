@@ -195,7 +195,7 @@ class site_view {
                 <tr id="<?php echo $row['id'];?>">
                     <td <?php echo $row_style;?>>
                     <?php if( isset( $row['columns'] ) ):?>
-                    	<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                    	<table class="<?php echo $row['class'];?>" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                         	<tr>
                             <?php $column_count = $layout_model->get_columns_by_layout( $row['layout'] );
 							$adj_width = $email_width;

@@ -58,7 +58,7 @@ class item_featured_image_model {
 		}
 	}
 	
-	public function render_html_email( $pagebuilder_model , $instance = array() ){
+	public function render_html_email( $pagebuilder_model ){
 		$post = $pagebuilder_model->post;
 		if( has_post_thumbnail( $post->ID ) ){
 			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
