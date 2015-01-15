@@ -25,6 +25,7 @@ class layout_model {
 		'page_title',
 		'subtitle',
 		'insert_image',
+		'feed',
 		 );
 		 
 	public $registered_sidebars = array(  
