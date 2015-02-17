@@ -25,7 +25,7 @@ class layout_model {
 		'page_title',
 		'subtitle',
 		'insert_image',
-		'feed',
+		//'feed',
 		 );
 		 
 	public $registered_sidebars = array(  
@@ -129,7 +129,9 @@ class layout_model {
 	}
 	
 	public function get_item_object( $item_array ){
+		
 		switch ( $item_array['type'] ){
+			
         case 'native':
 			  $item_class = __NAMESPACE__.'\\item_'.$item_array['id'].'_model';
 			  if( class_exists( $item_class, true ) ){
@@ -141,6 +143,7 @@ class layout_model {
 		  case 'widget':
 			  $item_class = $item_array['id'];
 			  $item_class = str_replace('\\\\', '\\' , $item_class );
+			  
 			  if( class_exists( $item_class, true ) ){
 				  $item = new $item_class();
 				  $item->name .= ' - Widget';

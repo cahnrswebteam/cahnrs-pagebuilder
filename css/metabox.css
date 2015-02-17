@@ -645,68 +645,6 @@ border-top: 1px solid #ccc;
 	margin: 5px 0;
 }
 
-/*
- * New CSS 
-*/
-
-.cwp-form .cwp-form-section > ul,
-.cwp-form .cwp-form-section > p {
-	margin: 0.5rem;
-}
-
-.cwp-form .dynamic-field {
-	display: none;
-}
-
-.cwp-form .dynamic-field.active-field{
-	display: block;
-}
-
-.cwp-form-section-title {
-	display: block;
-	padding: 0.5rem 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-	color: #ccffff;
-	text-decoration: none;
-	background: #777;
-}
-
-.cwp-form .cwp-form-section-content {
-	display: none;
-	border: 1px solid #777;
-	background-color: #fff;
-	padding: 0.5rem 0 2rem;
-}
-
-.cwp-form .cwp-form-section-content.active-form-section {
-	display: block;
-}
-
-.cwp-form .add-insert-item {
-	padding: 0.5rem 2.5rem 0.5rem 1rem;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	color: #555;
-	font-size: 0.8rem;
-	word-wrap: break-word;
-	position: relative;
-	background: #eee;
-	margin-bottom: 0.25rem;
-}
-
-.cwp-form .add-insert-item a {
-	width: 2rem;
-	height: 100%;
-	color: #600;
-	background: #ddd;
-	text-align: center;
-	position: absolute;
-	right: 0;
-	top: 0;
-	border-radius: 3px;
-}
-
 /** BASE 64 IMAGES **/
 
 #pagebuilder-layout-editor .layout-column {
