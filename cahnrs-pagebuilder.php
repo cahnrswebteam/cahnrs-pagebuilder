@@ -1,7 +1,7 @@
 <?php namespace cahnrswp\pagebuilder;
 
 /**
-* Plugin Name: CAHNRS Page Builder Branch
+* Plugin Name: CAHNRS Page Builder
 * Plugin URI: http://cahnrs.wsu.edu/communications
 * Description: Builds Custom Layouts For Pages/Posts
 * Version: 1.5
@@ -10,19 +10,27 @@
 * License: GPL2
 */
 
-class cahnrs_pagebuilder{
+class Init_CAHNRS_Pagebuilder{
+	
+	private $render_site;
+	
 	
 	public function __construct(){
 		$this->init_autoload(); // ACTIVATE CUSTOM AUTOLOADER FOR CLASSES
 		$this->define_constants(); // YEP, THAT'S WHAT IT DOES
-		
-		add_action( 'init', array( $this, 'pagebuilder_content_filter' ), 1 );
 		
 		//$init_layout_tab = new layout_control();
 		//$init_layout_tab->init();
 		
 		//$init_save = new save_control();
 	}
+	/**
+		* @Desc Builds content layout for local post/page
+		*
+		* @param $post ( object | int ) WP post object or post id
+		*
+		* @return Formatted HTML layout for the post  
+	*/
 	
 	public function pagebuilder_content_filter(){
 		if ( !has_filter( 'pagebuilder_content', 'wptexturize' ) ) {
@@ -39,6 +47,19 @@ class cahnrs_pagebuilder{
         } //end has_filter
 	}
 	
+	public function render_local( $post ){
+		
+		if( !is_object( $post ) ) { 
+			
+			$post = get_post( $post );
+			
+		}
+		
+		$layout = $this->render_site->render_site( $post );
+		
+		return $layout;
+		
+	}
 	
 	public function init(){
 		if ( is_admin() ) { 
@@ -55,8 +76,8 @@ class cahnrs_pagebuilder{
 		$manage_items = new item_control();
 		$manage_items->init();
 		
-		$render_site = new render_site_control();
-		$render_site->init();
+		$this->render_site = new render_site_control();
+		$this->render_site->init();
 	}
 	
 	public function init_admin_post(){
@@ -76,6 +97,6 @@ class cahnrs_pagebuilder{
 	
 }
 
-$cahnrs_pabebuilder = new cahnrs_pagebuilder();
+$cahnrs_pabebuilder = new Init_CAHNRS_Pagebuilder();
 $cahnrs_pabebuilder->init();
 ?>

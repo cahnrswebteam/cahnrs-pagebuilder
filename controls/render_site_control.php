@@ -20,16 +20,15 @@ class render_site_control {
 	
 	public function render_builder( $content ){
 		global $post; // WP Post object
-		if ( ( is_singular('post') || is_singular('page') || is_singular('html_email') || is_singular('email') ) /*&& is_main_query()*/ ) {
+		if ( ( is_singular('post') || is_singular('page') || is_singular('html_email') ) /*&& is_main_query()*/ ) {
 			global $in_loop; 
 			global $force_builder;
-			if( isset(  $in_loop ) && $in_loop ) return $content;
+			if( $in_loop ) return $content;
 			$in_loop = true;
-			
-			if( 'html_email' == $post->post_type || 'email' == $post->post_type ){ ;
+			if( 'html_email' == $post->post_type ){ 
 				$content = $this->render_email( $content , $post );
 			} else {
-				$content = $this->render_site( $content , $post );
+				$content = $this->render_site( $post );
 			}
 			$in_loop = false;
 			return $content;
@@ -37,7 +36,7 @@ class render_site_control {
 		return '<div class="pagebuilder-item">'.$content.'</div>';
 	}
 	
-	public function render_site( $content , $post ) {
+	public function render_site( $post ) {
 		
 		$this->layout_model = new layout_model( $post ); // init layout model with post object
 		
@@ -64,11 +63,12 @@ class render_site_control {
 			$tertiary_nav->get_nav( array() );
 		}
 		
-		return ob_get_clean(); // Return content
+		return apply_filters( 'cahnrs_pagebuilder_render_site', ob_get_clean() , $layout_obj , $post );
+		
 	}
 	
 	public function render_email( $content , $post ){
-		//$item_view = new item_view();
+		$item_view = new item_view();
 		$pagebuilder_model = new pagebuilder_model( $content , $post );
 		//$item_view->replace_email_items( $pagebuilder_model );
 		$email_view = new layout_email_view( $this , $pagebuilder_model );
