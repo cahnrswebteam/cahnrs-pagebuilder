@@ -214,83 +214,88 @@ class metabox_view {
 	
 	public function render_layout_editor_item( $item_array, $input_name ){
 		$item = $this->layout_model->get_item_object( $item_array );
-		$item_type = ( $item->sub_type )? $item->sub_type : $item_array['type']; 
-		$base_id = $item_array['id'].'-'.$item_array['instance'];
-		$input_name .='[items]['.$base_id.']';
-		if( $item_array['settings']['title'] ){
-			$item_title = $item_array['settings']['title'];
-			$item_description = $item->name;
-		} else {
-			$in = ( 1  == $item_array['instance'] )? '': $item_array['instance'];
-			$item_title = $item->name.' '.$in;
-			$item_description = $item->description;
-		}; ?>
-        <a href="#" class="add-item-action inline-add-item <?php echo $base_id;?>"><span>+ Add New Item</span></a>
-        <div class="pagebuilder-item-wrapper">
-            <a class="select-add-item pagebuilder-item <?php echo $item_type;?> <?php echo $item_array['id'];?> <?php echo $base_id;?>" href="#" data-id="<?php echo $item_array['id'];?>" data-type="native" data-baseid="<?php echo $base_id;?>" data-instance="<?php echo $item_array['instance'];?>">
-                <span class="title"><?php echo $item_title;?></span>
-                <span class="summary"><?php echo $item_description;?></span>
-            </a>
-            <?php if( 'widget' == $item_array['type'] || method_exists( $item ,'get_form' ) ):?>
-            <div class="pagebuilder-settings-form pagebuilder-lightbox-window">
-            
-            
-            
-            
-                <div class="settings-wrapper">
-                	<header>
-                    	<?php echo $item->name;?>
-                    </header>
-                    <section class="form-content">
-                    <?php 
-					if( 'widget' == $item_array['type'] ){
-						$item_name = 'widget-'.$item->id_base.'[1]';
-						ob_start();
-						$item->form( $item_array['settings'] );
-						$form = ob_get_clean();
-						echo str_replace( $item_name , $input_name.'[settings]' , $form );
-                    } else {
-                        echo $item->get_form( $item_array , $input_name );
-                    }
-                    ?>
-                    <div class="cc-form-section-advanced">
-						<header>Advanced Settings +</header>
-    					<div class="section-wrapper">
-                            <div class="form-sub-section cc-form-advanced-settings">
-                    <p>
-                    <?php
-                    if( isset( $item_array['settings']['is_content'] ) ) { $content_checked = $item_array['settings']['is_content'];} 
-                    else if( $item->is_content ) { $content_checked = 1;} 
-                    else { $content_checked = 0;}?>
-                    <input style="display: none;" type="checkbox" name="<?php echo $input_name;?>[settings][is_content]" value="0" checked="checked" />
-                    <input type="checkbox" name="<?php echo $input_name;?>[settings][is_content]" value="1"  <?php checked( $content_checked, 1 ); ?> /> Include as Content</p>
-                    <p>
-                    <?php $force_first = ( isset( $item_array['settings']['force_mobile_first'] ) )? $item_array['settings']['force_mobile_first'] : 0;?>
-                    <input style="display: none;" type="checkbox" name="<?php echo $input_name;?>[settings][force_mobile_first]" value="0" checked="checked" />
-                    <input type="checkbox" name="<?php echo $input_name;?>[settings][force_mobile_first]" value="1"  <?php checked( $force_first, 1 ); ?> /> Force First - Responsive
-                    </p>
-                    <p>CSS Hook: <input type="text" name="<?php echo $input_name;?>[settings][css_hook]" value="<?php echo $item_array['settings']['css_hook'];?>" /></p> 
-                    		</div>
-                    	</div>
-                    </div>
-                    
-                    
-                    
-                    
-                    </section>
-                    
-                	<footer>
-                    	<a href="#" class="settings-done lb-close-action">Done</a><br />
-                        <a href="#" class="remove-item-action">Remove Item</a>
-                    </footer>
-                </div>
-            </div>
-            <?php endif;?>
-            <input type="text" class="hidden-input" name="<?php echo $input_name;?>[type]" value="<?php echo $item_array['type'];?>" />
-            <input type="text" class="hidden-input" name="<?php echo $input_name;?>[id]" value="<?php echo $item_array['id'];?>" />
-            <input type="text" class="hidden-input" name="<?php echo $input_name;?>[instance]" value="<?php echo $item_array['instance'];?>" />
-        </div>
+		
+		if( $item ){
+			$item_type = ( $item->sub_type )? $item->sub_type : $item_array['type']; 
+			$base_id = $item_array['id'].'-'.$item_array['instance'];
+			$input_name .='[items]['.$base_id.']';
+			if( $item_array['settings']['title'] ){
+				$item_title = $item_array['settings']['title'];
+				$item_description = $item->name;
+			} else {
+				$in = ( 1  == $item_array['instance'] )? '': $item_array['instance'];
+				$item_title = $item->name.' '.$in;
+				$item_description = $item->description;
+			}; ?>
+			<a href="#" class="add-item-action inline-add-item <?php echo $base_id;?>"><span>+ Add New Item</span></a>
+			<div class="pagebuilder-item-wrapper">
+				<a class="select-add-item pagebuilder-item <?php echo $item_type;?> <?php echo $item_array['id'];?> <?php echo $base_id;?>" href="#" data-id="<?php echo $item_array['id'];?>" data-type="native" data-baseid="<?php echo $base_id;?>" data-instance="<?php echo $item_array['instance'];?>">
+					<span class="title"><?php echo $item_title;?></span>
+					<span class="summary"><?php echo $item_description;?></span>
+				</a>
+				<?php if( 'widget' == $item_array['type'] || method_exists( $item ,'get_form' ) ):?>
+				<div class="pagebuilder-settings-form pagebuilder-lightbox-window">
+				
+				
+				
+				
+					<div class="settings-wrapper">
+						<header>
+							<?php echo $item->name;?>
+						</header>
+						<section class="form-content">
+						<?php 
+						if( 'widget' == $item_array['type'] ){
+							$item_name = 'widget-'.$item->id_base.'[1]';
+							ob_start();
+							if( method_exists( $item , 'form' ) ){
+							$item->form( $item_array['settings'] );
+							}
+							$form = ob_get_clean();
+							echo str_replace( $item_name , $input_name.'[settings]' , $form );
+						} else {
+							echo $item->get_form( $item_array , $input_name );
+						}
+						?>
+						<div class="cc-form-section-advanced">
+							<header>Advanced Settings +</header>
+							<div class="section-wrapper">
+								<div class="form-sub-section cc-form-advanced-settings">
+						<p>
+						<?php
+						if( isset( $item_array['settings']['is_content'] ) ) { $content_checked = $item_array['settings']['is_content'];} 
+						else if( $item->is_content ) { $content_checked = 1;} 
+						else { $content_checked = 0;}?>
+						<input style="display: none;" type="checkbox" name="<?php echo $input_name;?>[settings][is_content]" value="0" checked="checked" />
+						<input type="checkbox" name="<?php echo $input_name;?>[settings][is_content]" value="1"  <?php checked( $content_checked, 1 ); ?> /> Include as Content</p>
+						<p>
+						<?php $force_first = ( isset( $item_array['settings']['force_mobile_first'] ) )? $item_array['settings']['force_mobile_first'] : 0;?>
+						<input style="display: none;" type="checkbox" name="<?php echo $input_name;?>[settings][force_mobile_first]" value="0" checked="checked" />
+						<input type="checkbox" name="<?php echo $input_name;?>[settings][force_mobile_first]" value="1"  <?php checked( $force_first, 1 ); ?> /> Force First - Responsive
+						</p>
+						<p>CSS Hook: <input type="text" name="<?php echo $input_name;?>[settings][css_hook]" value="<?php echo $item_array['settings']['css_hook'];?>" /></p> 
+								</div>
+							</div>
+						</div>
+						
+						
+						
+						
+						</section>
+						
+						<footer>
+							<a href="#" class="settings-done lb-close-action">Done</a><br />
+							<a href="#" class="remove-item-action">Remove Item</a>
+						</footer>
+					</div>
+				</div>
+				<?php endif;?>
+				<input type="text" class="hidden-input" name="<?php echo $input_name;?>[type]" value="<?php echo $item_array['type'];?>" />
+				<input type="text" class="hidden-input" name="<?php echo $input_name;?>[id]" value="<?php echo $item_array['id'];?>" />
+				<input type="text" class="hidden-input" name="<?php echo $input_name;?>[instance]" value="<?php echo $item_array['instance'];?>" />
+			</div>
         <?php
+		}
 	}
 	
 	public function render_add_item_window( $post ){
