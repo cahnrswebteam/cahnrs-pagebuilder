@@ -12,67 +12,115 @@ class render_site_control {
 	
 	public function init(){
 		
-		 \add_filter( 'the_content', array( $this , 'render_builder' ), 15 ); 
+		 \add_filter( 'the_content', array( $this , 'render_site' ), 15 ); 
 		 
 		 \add_action( 'wp_enqueue_scripts', array( $this , 'add_scripts' ) );
 		 
+		 \add_action( 'customize_register', array( $this , 'add_customize_section' ) );
 	}
 	
-	public function render_builder( $content ){
-		global $post; // WP Post object
-		if ( ( is_singular('post') || is_singular('page') || is_singular('html_email') ) /*&& is_main_query()*/ ) {
-			global $in_loop; 
-			global $force_builder;
-			if( $in_loop ) return $content;
+	public function add_customize_section( $wp_customize ){
+		
+		$wp_customize->add_section('cahnrs_pb', array(
+			'title'       => 'CAHNRS Pagebuilder',
+			'description' => '',
+			'priority'    => 1,
+		));
+	
+		$wp_customize->add_setting('cahnrs_pb_options[tertiary]', array(
+			'capability' => 'edit_theme_options',
+			'type'       => 'option',
+		));
+	
+		$wp_customize->add_control('cahnrs_pb_tertiary', array(
+			'settings' => 'cahnrs_pb_options[tertiary]',
+			'label'    => 'Disable Tertiary Nav',
+			'section'  => 'cahnrs_pb',
+			'type'     => 'checkbox',
+		));
+		
+	}
+	
+	public function render_site( $content ) {
+		
+		$options = get_option( 'cahnrs_pb_options'  );
+		
+		global $post; 
+		global $in_loop;
+		global $force_builder;
+		if( $in_loop ) return $content;
+		if ( ( is_singular('post') || is_singular('page') ) /*&& is_main_query()*/ ) {
 			$in_loop = true;
-			if( 'html_email' == $post->post_type ){ 
-				$content = $this->render_email( $content , $post );
-			} else {
-				$content = $this->render_site( $post );
-			}
+			$layout_obj = $this->layout_model->get_layout_obj( $post );
+			ob_start();
+			$this->site_view->get_site_view( $post , $layout_obj , $this->layout_model );
+			
+			if ( empty( $options['tertiary'] ) ){
+			
+				$this->add_tertiary_nav( $post , $layout_obj , $this->layout_model );
+			
+			} // end if
+			
 			$in_loop = false;
-			return $content;
-		}
+			return ob_get_clean();
+		} 
+		else if ( is_singular('email') ){
+			$in_loop = true;
+			$layout_obj = $this->layout_model->get_layout_obj( $post );
+			ob_start();
+			$this->site_view->get_email_view( $post , $layout_obj , $this->layout_model );
+			$in_loop = false;
+			return ob_get_clean();
+		};
+		
+	
 		return '<div class="pagebuilder-item">'.$content.'</div>';
 	}
 	
-	public function render_site( $post ) {
-		
-		$this->layout_model = new layout_model( $post ); // init layout model with post object
-		
-		
-		$layout_obj = $this->layout_model->get_layout_obj( $post ); // Legacy - get rid of this soon
-		
-		ob_start(); // It'll buff out
-		
-		/*************************************
-		** Start tertiary nav before **
-		*************************************/
-		if( $this->layout_model->tertiary_nav && 'before' ==  $this->layout_model->tertiary_position ){
-			$tertiary_nav = new tertiary_nav_view( $this , $this->layout_model ); // Get nav view
-			$tertiary_nav->get_nav( array() );
+	private function add_tertiary_nav( $post , $layout_obj , $layout_model ){
+		/************************************************
+		** Add third level nav to layout **
+		*************************************************/
+		if ( $layout_obj['tertiary_nav'] ) {
+			echo '<nav id="pagebuilder-tertiary-nav" role="navigation">';
+			echo '<ul>';
+			$is_active = false;
+			$i = 0;
+			foreach ( $layout_obj['tertiary_nav'] as $menu_item ){
+				if( $menu_item->object_id == $post->ID ) $is_active = $post->ID;
+			}
+			foreach ( $layout_obj['tertiary_nav'] as $menu_item ) {
+				if( $is_active ){
+					$active = (  $is_active == $menu_item->object_id  )? 'selected' : '';
+				} 
+				else {
+					$active = (  0 == $i )? 'selected' : '';
+				}
+				$dynamic = ( $menu_item->type == 'post_type' )? 'is-dynamic' : '';
+				echo '<li class="' . $active . '"><a class="'.$dynamic.'" href="' . $menu_item->url . '" data-index="'.$i.'">' . $menu_item->title . '</a></li>';
+				$i++;
+			}
+			echo '</ul>';
+			echo '</nav>';
+			$i = 0;
+			foreach ( $layout_obj['tertiary_nav'] as $menu_item ) {
+				if( $is_active ){
+					$active = (  $is_active == $menu_item->object_id  )? 'selected' : 'inactive';
+				} 
+				else {
+					$active = (  0 == $i )? 'selected' : '';
+				}
+				if( $menu_item->type == 'post_type' ){
+					echo '<div class="pagebuilder-tertiary-page tertiary-'.$i.' '.$active.'" >';
+					$post = get_post( $menu_item->object_id );
+					$lay_obj = $this->layout_model->get_layout_obj( $post );
+					$this->site_view->get_site_view( $post , $lay_obj , $layout_model );
+					echo '</div>';
+				}
+				$i++;
+			}
 		}
-
-		$this->site_view->get_site_view( $post , $layout_obj , $this->layout_model ); // Render View
-		
-		/*************************************
-		** Start tertiary nav after **
-		*************************************/
-		if( $this->layout_model->tertiary_nav && 'after' ==  $this->layout_model->tertiary_position ){
-			$tertiary_nav = new tertiary_nav_view( $this , $this->layout_model ); // Get nav view
-			$tertiary_nav->get_nav( array() );
-		}
-		
-		return apply_filters( 'cahnrs_pagebuilder_render_site', ob_get_clean() , $layout_obj , $post );
-		
-	}
-	
-	public function render_email( $content , $post ){
-		$item_view = new item_view();
-		$pagebuilder_model = new pagebuilder_model( $content , $post );
-		//$item_view->replace_email_items( $pagebuilder_model );
-		$email_view = new layout_email_view( $this , $pagebuilder_model );
-		return $email_view->get_email();
+		//$this->get_third_level_nav( $post );
 	}
 	
 	public function add_scripts(){

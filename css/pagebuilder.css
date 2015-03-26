@@ -5,12 +5,6 @@
 .pagebuilder-row {
 	position: relative;
 }
-.pagebuilder-row-background {
-	min-height: 400px;
-	background-position: center center;
-	background-size: cover;
-	margin-bottom: 1rem;
-}
 .pagebuilder-column {
 	position: relative;
 }
@@ -25,19 +19,9 @@
 	display: none;
 }
 /**
- * Hooks
+ * Row Hooks
  * ----------------------------------------------------------------------------
  */
-.pagebuilder-item.marginless { 
-	margin: 0 !important;
-}
-.pagebuilder-item.tight { 
-	padding: 0 !important;
-}
-.pagebuilder-item.image-full img { 
-	height: auto;
-	width: 100% !important;
-}
 .pagebuilder-row.white:before {
 	content: ' ';
 	position: absolute;
@@ -71,11 +55,6 @@
 	background: linear-gradient(to bottom,  rgba(238,238,238,1) 0%,rgba(125,185,232,0) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#007db9e8',GradientType=0 );
 
-}
-.pagebuilder-row.fixed-background .pagebuilder-row-background {
-	background-position: center top;
-	background-size: 100% auto;
-	background-attachment: fixed;
 }
 
 /**

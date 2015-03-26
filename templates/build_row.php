@@ -5,36 +5,7 @@ $metabox_view = new metabox_view();
 
 $row = array();
 $row['id'] = ( isset( $_GET['i'] ))? 'row-'.$_GET['i'] : 'row-'.rand(10,100);
-
-if( isset( $_GET['url'] ) &&  $_GET['url'] ) {
-	
-	$url = sanitize_text_field( $_GET['url'] );
-	
-	$row['name'] = 'Existing Content: ' . $url;
-	
-	$row['url'] = $url;
-	
-	$urlid = url_to_postid( $url ); // returns 0 on failure
-	
-	$row['urlid'] = $urlid;
-	
-	if( isset( $_GET['import-title'] ) && is_int( $_GET['import-title'] ) ){
-		
-		$row['import_title'] = $_GET['import-title'];
-		
-	}
-	
-	
-} else if ( isset( $_GET['n'] ) ) {
-	
-	$row['name'] = sanitize_text_field( $_GET['n'] );
-	
-} else {
-	
-	$row['name'] = 'Content Row '. $row['id'];
-	
-}// end if $_GET['url']
-
+$row['name'] = ( isset( $_GET['n'] ))? urldecode( $_GET['n'] ) : 'Content Row '. $row['id'];
 $row['class'] = ( isset( $_GET['c'] ))? urldecode( $_GET['c'] ) : '';
 $row['layout'] = ( isset( $_GET['l'] ))? urldecode( $_GET['l'] ) : '';
 

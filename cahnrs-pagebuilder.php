@@ -4,16 +4,13 @@
 * Plugin Name: CAHNRS Page Builder
 * Plugin URI: http://cahnrs.wsu.edu/communications
 * Description: Builds Custom Layouts For Pages/Posts
-* Version: 1.5
+* Version: 1.0.6
 * Author: CAHNRS Communication, Danial Bleile, Phil Cabel
 * Author URI: http://URI_Of_The_Plugin_Author
 * License: GPL2
 */
 
-class Init_CAHNRS_Pagebuilder{
-	
-	private $render_site;
-	
+class cahnrs_pagebuilder{
 	
 	public function __construct(){
 		$this->init_autoload(); // ACTIVATE CUSTOM AUTOLOADER FOR CLASSES
@@ -24,49 +21,11 @@ class Init_CAHNRS_Pagebuilder{
 		
 		//$init_save = new save_control();
 	}
-	/**
-		* @Desc Builds content layout for local post/page
-		*
-		* @param $post ( object | int ) WP post object or post id
-		*
-		* @return Formatted HTML layout for the post  
-	*/
-	
-	public function pagebuilder_content_filter(){
-		if ( !has_filter( 'pagebuilder_content', 'wptexturize' ) ) {
-            add_filter( 'pagebuilder_content', 'wptexturize'        );
-            add_filter( 'pagebuilder_content', 'convert_smilies'    );
-            add_filter( 'pagebuilder_content', 'convert_chars'      );
-            add_filter( 'pagebuilder_content', 'wpautop'            );
-            add_filter( 'pagebuilder_content', 'shortcode_unautop'  );
-            add_filter( 'pagebuilder_content', 'prepend_attachment' );
-            $vidembed = new \WP_Embed();
-            add_filter( 'pagebuilder_content', array( &$vidembed, 'run_shortcode'), 8 );
-            add_filter( 'pagebuilder_content', array( &$vidembed, 'autoembed'), 8 );
-            add_filter( 'pagebuilder_content', 'do_shortcode', 11);
-        } //end has_filter
-	}
-	
-	public function render_local( $post ){
-		
-		if( !is_object( $post ) ) { 
-			
-			$post = get_post( $post );
-			
-		}
-		
-		$layout = $this->render_site->render_site( $post );
-		
-		return $layout;
-		
-	}
 	
 	public function init(){
 		if ( is_admin() ) { 
 			add_action( 'load-post.php', array( $this , 'init_admin_post' ) );
 			add_action( 'load-post-new.php', array( $this , 'init_admin_post' ) );
-			$settings = new settings_control();
-			add_action( 'admin_init', array( $settings ,'register_settings' ) );
 		}
 		if( isset( $_GET['cahnrs-pagebuilder'] ) ){
 			$ajax_control = new ajax_page_control();
@@ -76,8 +35,8 @@ class Init_CAHNRS_Pagebuilder{
 		$manage_items = new item_control();
 		$manage_items->init();
 		
-		$this->render_site = new render_site_control();
-		$this->render_site->init();
+		$render_site = new render_site_control();
+		$render_site->init();
 	}
 	
 	public function init_admin_post(){
@@ -97,6 +56,6 @@ class Init_CAHNRS_Pagebuilder{
 	
 }
 
-$cahnrs_pabebuilder = new Init_CAHNRS_Pagebuilder();
+$cahnrs_pabebuilder = new cahnrs_pagebuilder();
 $cahnrs_pabebuilder->init();
 ?>

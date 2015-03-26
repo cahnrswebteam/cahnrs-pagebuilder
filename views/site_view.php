@@ -1,17 +1,11 @@
 <?php namespace cahnrswp\pagebuilder;
 
 class site_view {
-	public $layout_model;
+
 	public $meta_base = '_pagebuilder';
 	public $content_base = '_pagebuilder_editors';
-	public $args;
 
-	public function get_site_view( $post, $layout_obj, $layout_model , $args = array() ) {
-		$this->layout_model = $layout_model;
-		$sets = $layout_model->settings;
-		$pos = ( isset( $sets['tertiary'] ) )? $sets['tertiary'] : 0;
-		$this->args = $args;
-		
+	public function get_site_view( $post, $layout_obj, $layout_model ) {
 		
 		/************************************************
 		** START LAYOUT **
@@ -61,133 +55,73 @@ class site_view {
 	echo '</div>';
 	
 	
-    foreach( $layout_obj as $row ){
-		
-		
-		if( isset( $row['urlid'] ) && $row['urlid'] ) {
-			
-			global $cahnrs_pabebuilder;
-			
-			do_action( 'cahnrs_pagebuilder_before_render_import' , $row , $row['urlid'] );
-			
-			if( isset( $row['import_title'] ) && $row['import_title'] ) {
-				
-				echo '<h2>' . get_the_title( $row['urlid'] ) . '</h2>';
-				
-			}
-			
-			$layout = $cahnrs_pabebuilder->render_local( $row['urlid'] );
-			
-			echo apply_filters( 'cahnrs_pagebuilder_render_import', $layout , $row );
-			
-			
-		} else if( isset( $row['class'] ) && strpos( $row['class'] , 'boundless' ) !== false ){ // render outside of row
-			
-			if( isset( $row['columns']['column-1']['items'] ) ){
-				
-				$items = $row['columns']['column-1']['items'];
-				
-				$args['before_widget'] = '';
-				
-				$args['after_widget'] = '';
-				
-				foreach( $items as $item_key => $item ){
-					
-					include DIR . '/inc/inc-public-site-item.php';
-					
-				}
-			}
-			
-		} else if( isset( $row['columns'] ) ) {
-		
-			/** 
-			 * TO DO: CONSOLIDATE THE COLUMN COUNT AND COULUMN STYLES INTO ONE ARRAY - DB *
-			*/
-			
+    foreach( $layout_obj as $row ): ?>
+        <?php 
+			/** TO DO: CONSOLIDATE THE COLUMN COUNT AND COULUMN STYLES INTO ONE ARRAY - DB **/
 			$column_count = $layout_model->get_columns_by_layout( $row['layout'] ); // GET COLUMN COUNT FOR NOW
-			
-			/**
-			 * If the row is a two column with an empty right column then render as one column aka "pagbuilder-layout-aside-empty" **
-			*/
-			
-			if ( !isset( $row['columns']['column-2'] ) && 'pagbuilder-layout-aside' == $row['layout'] ) {
-				
-				$row['layout'] .='-empty';
-				
-			} 
-			
-			$row_class = 'pagebuilder-row ';
-			
-			$row_class .= ' ' . $row['id'];
-			
-			$row_class .= ' ' . $row['layout'];
-			
-			$row_class .= ' ' . $row['class'];
-			
-			if ( !isset( $row['columns']['column-2'] ) ) {
-				
-				$row_class .= ' empty-aside';
-				
-			}
-			ob_start();
-			
-			include DIR . '/inc/inc-public-site-row.php';
-			
-			echo apply_filters( 'cahnrs_pagebuilder_render_row', ob_get_clean() , $row , $post );
-			
-		} // end if $row['urlid']
-         
-	} // end foreach $row
+			/*************************************
+			** If the row is a two column with an empty right column then render as one column aka "pagbuilder-layout-aside-empty" **
+			**************************************/
+			$row['layout'] =( !isset( $row['columns']['column-2'] ) && 'pagbuilder-layout-aside' == $row['layout'] )? 
+				$row['layout'].'-empty' : $row['layout'];
+        	if( isset( $row['columns'] ) ):?>
+				<?php $empty_aside = ( isset( $row['columns']['column-2'] ))? '' : 'empty-aside'; ?>
+                <div id="<?php echo $row['id'];?>" class="pagebuilder-row <?php echo $row['id'].' '.$row['layout'].' '.$empty_aside.' '.$row['class'];?>" >
+                    <?php for( $i = 1; $i <= $column_count; $i++ ):
+						//if( 'pagbuilder-layout-aside' == $row['layout'] ){
+							///if( 1 == $i ) $c = 2;
+							//if( 2 == $i ) $c = 1;
+						//} else {
+							$c = $i;
+						//}
+						$column_id = 'column-'.$c;
+						$column = ( isset( $row['columns'][$column_id]) )? $row['columns'][$column_id] : array();
+						$column_style = $layout_model->layout_styles[ $row['layout'] ][ $column_id ];
+                        ?><div id="<?php echo $row['id'].'-column-'.$c;?>" class="pagebuilder-column pagebuilder-column-<?php echo $c;?>" style="<?php echo $column_style;?>">
+                        <?php if( $column['items']){
+                        	foreach( $column['items'] as $item_key => $item ){
+								$is_content = ( isset( $item['settings']['is_content'] ) )? $item['settings']['is_content'] : false;
+								if( $is_content || 'page_content' == $item['id'] || 'content_block' == $item['id'] ){
+									$tag = 'div';
+								} else {
+									$tag = 'aside';
+								}
+								//$tag = ( $item['settings']['is_content'] )? 'div' : 'aside';
+								//$tag = ( 'page_content' == $item['id'] || 'content_block' == $item['id'] )? 'article' : $tag;
+								//$title = $this->get_title( $item );
+								$args = array();
+								$args['before_widget'] = $this->get_item_wrapper( $tag , 'before' , $item, $item_key );
+								$args['after_widget'] = $this->get_item_wrapper( $tag );
+								switch( $item['type'] ){
+									case 'native' :
+										echo $args['before_widget'];
+										$item_obj = $layout_model->get_item_object( $item );
+										$item_obj->item_render_site( $post , $item );
+										echo $args['after_widget'];
+										break;
+									case 'widget' :
+										\the_widget( $item['id'] , $item['settings'], $args );
+										break;
+								};
+							}
+                        };?>
+                        </div><?php 
+					endfor;?>
+                </div>
+        	<?php endif;?>
+        <?php endforeach;?>
+        <?php
 	}
 	
-	/*private function add_tertiary_nav( $post , $layout_obj , $layout_model ){
-		echo '<nav id="pagebuilder-tertiary-nav" role="navigation"><ul>';
-		if ( $layout_obj['tertiary_nav'] ) {
-			$is_active = false;
-			$i = 0;
-			foreach ( $layout_obj['tertiary_nav'] as $menu_item ){
-				if( $menu_item->object_id == $post->ID ) $is_active = $post->ID;
-			}
-			foreach ( $layout_obj['tertiary_nav'] as $menu_item ) {
-				if( $is_active ){
-					$active = (  $is_active == $menu_item->object_id  )? 'selected' : '';
-				} 
-				else {
-					$active = (  0 == $i )? 'selected' : '';
-				}
-				$dynamic = ( $menu_item->type == 'post_type' )? 'is-dynamic' : '';
-				echo '<li class="' . $active . '"><a class="'.$dynamic.'" href="' . $menu_item->url . '" data-index="'.$i.'">' . $menu_item->title . '</a></li>';
-				$i++;
-			}
-			
-			$i = 0;
-			foreach ( $layout_obj['tertiary_nav'] as $menu_item ) {
-				if( $is_active ){
-					$active = (  $is_active == $menu_item->object_id  )? 'selected' : 'inactive';
-				} 
-				else {
-					$active = (  0 == $i )? 'selected' : '';
-				}
-				if( $menu_item->type == 'post_type' ){
-					echo '<div class="pagebuilder-tertiary-page tertiary-'.$i.' '.$active.'" >';
-					$post = get_post( $menu_item->object_id );
-					$lay_obj = $this->layout_model->get_layout_obj( $post );
-					$this->get_site_view( $post , $lay_obj , $layout_model, array( 'tertirary-nav' => false ) );
-					echo '</div>'; 
-				}
-				$i++;
-			}
-		}
-		echo '</ul></nav>';
-		//$this->get_third_level_nav( $post );
-	}*/
+	public function get_tertiary_nav( $post, $layout_obj, $layout_model ){
+	}
 	
-	public function get_email_view( $post , $layout_obj, $layout_model ){  
+	public function get_email_view( $post , $layout_obj, $layout_model ){ 
 		/************************************************
 		** START LAYOUT **
 		*************************************************/
-		?>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+		$email_width = 700;?>
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="<?php echo $email_width;?>" style="border-collapse: collapse;">
             <tr>
                 <td>
                 	<center>&nbsp;<br />
@@ -196,9 +130,16 @@ class site_view {
                 </td>
             </tr>
         </table>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
-        	<?php foreach( $layout_obj as $row_id => $row ):?>
-                <tr id="<?php echo $row['id'];?>">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="<?php echo $email_width;?>" style="border-collapse: collapse;">
+        	<?php foreach( $layout_obj as $row ):?>
+            	<?php if( 'row-100' == $row['id'] ){
+					$row_style = ' style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;"';
+				} else if( 'row-200' == $row['id'] ) {
+					$row_style = 'bgcolor="#dddddd" style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;"';
+				} else {
+					$row_style = 'style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;"';
+				}//if( isset( $row['columns'] ) ):?>
+                <tr >
                     <td <?php echo $row_style;?>>
                     <?php if( isset( $row['columns'] ) ):?>
                     	<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
@@ -356,7 +297,7 @@ class site_view {
 	}*/
 	
 	
-	public function get_title( $item_instance ){
+	private function get_title( $item_instance ){
 		if( $item_instance['settings']['title_tag'] && $item_instance['settings']['title'] ){
 			$tag = $item_instance['settings']['title_tag'];
 			$title = $item_instance['settings']['title'];
@@ -366,8 +307,7 @@ class site_view {
 		}
 	}
 	
-	public function get_item_wrapper( $tag , $position = 'after' , $item = array(), $item_key = '' ){
-		if ( !$tag ) return '';
+	private function get_item_wrapper( $tag , $position = 'after' , $item = array(), $item_key = '' ){
 		switch( $position ){
 			case 'before':
 				$force_first = ( isset( $item['settings']['force_mobile_first'] ) && $item['settings']['force_mobile_first'] )? ' pagebuilder-force-first' : '';

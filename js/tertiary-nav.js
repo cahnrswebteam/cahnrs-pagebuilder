@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-	/*$( 'body' ).on( 'click', '#pagebuilder-tertiary-nav .selected a', function(event) {
+	$( 'body' ).on( 'click', '#pagebuilder-tertiary-nav .selected a', function(event) {
 		//$( this ).addClass('selected');
 		//$(this).closest('ul').toggleClass('selected');
 		//event.preventDefault();
@@ -21,5 +21,5 @@ jQuery(document).ready(function($) {
 		//event.preventDefault();
 		$(this).closest('ul').toggleClass('open');
 		event.preventDefault();
-	});*/
+	});
 });
